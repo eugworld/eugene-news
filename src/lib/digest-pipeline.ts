@@ -7,7 +7,8 @@ import { digestComposer } from "@/mastra/agents/digest-composer";
 import { saveDigest, slugify, listDigestDates, getDigest } from "./storage";
 import type { RawArticle, Segment, SegmentStory, Correlation, DailyDigest, SegmentName } from "./types";
 
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "https://eugene-news.vercel.app";
+// Always use production URL in emails (even when triggered locally)
+const APP_URL = "https://news-agent-mastra.vercel.app";
 
 // === SOURCE CONFIGURATION BY SEGMENT ===
 const SEGMENT_SOURCES: Record<SegmentName, { rss: { feedUrl: string; source: string; limit: number }[]; hn?: { query: string }; newsapi?: { query: string; limit: number }[] }> = {
@@ -38,12 +39,14 @@ const SEGMENT_SOURCES: Record<SegmentName, { rss: { feedUrl: string; source: str
   },
   "Indonesia & SEA": {
     rss: [
-      { feedUrl: "https://jakartaglobe.id/feed", source: "Jakarta Globe", limit: 5 },
-      { feedUrl: "https://www.techinasia.com/feed", source: "Tech in Asia", limit: 5 },
+      { feedUrl: "https://www.channelnewsasia.com/api/v1/rss-outbound-feed?_format=xml&category=6511", source: "CNA Asia", limit: 8 },
+      { feedUrl: "https://www.straitstimes.com/news/asia/rss.xml", source: "Straits Times", limit: 8 },
+      { feedUrl: "https://restofworld.org/feed/", source: "Rest of World", limit: 5 },
+      { feedUrl: "https://www.scmp.com/rss/91/feed", source: "SCMP Asia", limit: 5 },
     ],
     newsapi: [
-      { query: "Indonesia technology OR Jakarta startup", limit: 5 },
-      { query: "Southeast Asia economy OR ASEAN", limit: 3 },
+      { query: "Indonesia economy OR Jakarta startup OR Indonesian rupiah", limit: 5 },
+      { query: "Southeast Asia technology OR ASEAN trade", limit: 3 },
     ],
   },
 };
