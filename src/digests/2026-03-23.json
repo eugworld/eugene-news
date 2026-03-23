@@ -1,327 +1,195 @@
 {
   "date": "2026-03-23",
-  "generatedAt": "2026-03-23T17:01:31.544Z",
-  "bigStory": {
-    "id": "iphone-17-pro-demonstrated-running-a-400b-llm",
-    "title": "iPhone 17 Pro Demonstrated Running a 400B LLM",
-    "link": "https://twitter.com/anemll/status/2035901335984611412",
-    "source": "Hacker News",
-    "pubDate": "2026-03-23T14:30:10Z",
-    "snippet": "https:&#x2F;&#x2F;xcancel.com&#x2F;anemll&#x2F;status&#x2F;2035901335984611412",
-    "category": "AI/ML",
-    "tldr": "A demonstration of a large language model running on a mobile device.",
-    "primaryAdvisor": "Tech Expert",
-    "perspectives": [
-      {
-        "advisor": "Tech Expert",
-        "soWhat": "This signals a trend towards edge AI and the potential for running complex models directly on user devices, which could open up opportunities for Sourcy to develop AI agents that operate offline or with reduced latency.",
-        "actionItem": "Investigate the feasibility of deploying smaller, optimized versions of Sourcy's AI agents on mobile devices.",
-        "relevanceScore": 8,
-        "challenge": null
-      }
-    ],
-    "overallRelevance": 8,
-    "isSkippable": false,
-    "isBigStory": true
-  },
-  "stories": [
+  "generatedAt": "2026-03-23T17:39:28.990Z",
+  "headline": "Gimlet Labs raised $80M to enable AI to run across multiple ",
+  "segments": [
     {
-      "id": "iphone-17-pro-demonstrated-running-a-400b-llm",
-      "title": "iPhone 17 Pro Demonstrated Running a 400B LLM",
-      "link": "https://twitter.com/anemll/status/2035901335984611412",
-      "source": "Hacker News",
-      "pubDate": "2026-03-23T14:30:10Z",
-      "snippet": "https:&#x2F;&#x2F;xcancel.com&#x2F;anemll&#x2F;status&#x2F;2035901335984611412",
-      "category": "AI/ML",
-      "tldr": "A demonstration of a large language model running on a mobile device.",
-      "primaryAdvisor": "Tech Expert",
-      "perspectives": [
+      "name": "Tech + AI",
+      "icon": "🤖",
+      "stories": [
         {
-          "advisor": "Tech Expert",
-          "soWhat": "This signals a trend towards edge AI and the potential for running complex models directly on user devices, which could open up opportunities for Sourcy to develop AI agents that operate offline or with reduced latency.",
-          "actionItem": "Investigate the feasibility of deploying smaller, optimized versions of Sourcy's AI agents on mobile devices.",
-          "relevanceScore": 8,
-          "challenge": null
-        }
-      ],
-      "overallRelevance": 8,
-      "isSkippable": false,
-      "isBigStory": true
-    },
-    {
-      "id": "i-built-an-ai-receptionist-for-a-mechanic-shop",
-      "title": "I built an AI receptionist for a mechanic shop",
-      "link": "https://www.itsthatlady.dev/blog/building-an-ai-receptionist-for-my-brother/",
-      "source": "Hacker News",
-      "pubDate": "2026-03-23T10:32:33Z",
-      "snippet": "48 points, 68 comments on HN",
-      "category": "AI/ML",
-      "tldr": "A developer shares their experience building an AI receptionist for a mechanic shop.",
-      "primaryAdvisor": "PM Expert",
-      "perspectives": [
-        {
-          "advisor": "PM Expert",
-          "soWhat": "This showcases a real-world application of AI agents in a small business setting, providing insights into the potential benefits and challenges of automating customer service tasks, which could inform Sourcy's product development roadmap for similar B2B applications.",
-          "actionItem": "Brainstorm potential applications of AI agents for automating customer service or support tasks within Sourcy's target market.",
-          "relevanceScore": 8,
-          "challenge": null
-        }
-      ],
-      "overallRelevance": 8,
-      "isSkippable": false,
-      "isBigStory": false
-    },
-    {
-      "id": "the-gold-standard-of-optimization-a-look-under-the-hood-of-rollercoaster-tycoon",
-      "title": "The gold standard of optimization: A look under the hood of RollerCoaster Tycoon",
-      "link": "https://larstofus.com/2026/03/22/the-gold-standard-of-optimization-a-look-under-the-hood-of-rollercoaster-tycoon/",
-      "source": "Hacker News",
-      "pubDate": "2026-03-22T19:02:43Z",
-      "snippet": "506 points, 138 comments on HN",
-      "category": "Tech",
-      "tldr": "An analysis of the efficient programming techniques used in the classic game RollerCoaster Tycoon.",
-      "primaryAdvisor": "Tech Expert",
-      "perspectives": [
-        {
-          "advisor": "Tech Expert",
-          "soWhat": "Understanding the optimization strategies used in resource-constrained environments like early game development can provide valuable insights for optimizing AI agent performance, especially in terms of memory usage and processing speed.",
-          "actionItem": "Research and apply relevant optimization techniques from the article to improve the efficiency of Sourcy's AI agents.",
-          "relevanceScore": 7,
-          "challenge": null
-        }
-      ],
-      "overallRelevance": 7,
-      "isSkippable": false,
-      "isBigStory": false
-    },
-    {
-      "id": "if-dspy-is-so-great-why-isnt-anyone-using-it",
-      "title": "If DSPy is so great, why isn't anyone using it?",
-      "link": "https://skylarbpayne.com/posts/dspy-engineering-patterns/",
-      "source": "Hacker News",
-      "pubDate": "2026-03-23T14:52:52Z",
-      "snippet": "119 points, 74 comments on HN",
-      "category": "AI/ML",
-      "tldr": "An analysis of the challenges and potential reasons for the limited adoption of the DSPy framework.",
-      "primaryAdvisor": "Tech Expert",
-      "perspectives": [
-        {
-          "advisor": "Tech Expert",
-          "soWhat": "This highlights the importance of evaluating the practical usability and adoption rate of new AI frameworks before investing significant time and resources, prompting a more critical assessment of DSPy's benefits for Sourcy's specific use cases.",
-          "actionItem": "Conduct a thorough evaluation of DSPy's strengths and weaknesses in the context of Sourcy's AI agent development needs.",
-          "relevanceScore": 7,
-          "challenge": null
-        }
-      ],
-      "overallRelevance": 7,
-      "isSkippable": false,
-      "isBigStory": false
-    },
-    {
-      "id": "github-appears-to-be-struggling-with-measly-three-nines-availability",
-      "title": "GitHub appears to be struggling with measly three nines availability",
-      "link": "https://www.theregister.com/2026/02/10/github_outages/",
-      "source": "Hacker News",
-      "pubDate": "2026-03-23T10:39:39Z",
-      "snippet": "314 points, 169 comments on HN",
-      "category": "Tech",
-      "tldr": "GitHub is experiencing availability issues, falling short of its promised uptime.",
-      "primaryAdvisor": "Tech Expert",
-      "perspectives": [
-        {
-          "advisor": "Tech Expert",
-          "soWhat": "This highlights the risk of relying solely on a single platform for critical infrastructure and suggests exploring more robust, distributed version control solutions or local backups.",
-          "actionItem": "Evaluate alternative Git hosting options or implement local backup strategies for critical repositories.",
-          "relevanceScore": 6,
-          "challenge": null
-        }
-      ],
-      "overallRelevance": 6,
-      "isSkippable": false,
-      "isBigStory": false
-    },
-    {
-      "id": "pc-gamer-recommends-rss-readers-in-a-37mb-article-that-just-keeps-downloading",
-      "title": "PC Gamer recommends RSS readers in a 37mb article that just keeps downloading",
-      "link": "https://stuartbreckenridge.net/2026-03-19-pc-gamer-recommends-rss-readers-in-a-37mb-article/",
-      "source": "Hacker News",
-      "pubDate": "2026-03-22T18:23:40Z",
-      "snippet": "754 points, 348 comments on HN",
-      "category": "Design",
-      "tldr": "A critique of PC Gamer's article on RSS readers due to its excessive file size and poor user experience.",
-      "primaryAdvisor": "Design Expert",
-      "perspectives": [
-        {
-          "advisor": "Design Expert",
-          "soWhat": "This is a stark reminder of the importance of optimizing website performance and user experience, especially considering the increasing demand for fast-loading, accessible content, which should inform Sourcy's web development practices.",
-          "actionItem": "Audit Sourcy's website for performance bottlenecks and optimize accordingly.",
-          "relevanceScore": 6,
-          "challenge": null
-        }
-      ],
-      "overallRelevance": 6,
-      "isSkippable": false,
-      "isBigStory": false
-    },
-    {
-      "id": "posse-publish-on-your-own-site-syndicate-elsewhere",
-      "title": "POSSE – Publish on your Own Site, Syndicate Elsewhere",
-      "link": "https://indieweb.org/POSSE",
-      "source": "Hacker News",
-      "pubDate": "2026-03-23T08:29:27Z",
-      "snippet": "343 points, 74 comments on HN",
-      "category": "Marketing",
-      "tldr": "POSSE is a strategy to publish content on your own website and then syndicate it to other platforms.",
-      "primaryAdvisor": "Marketing Expert",
-      "perspectives": [
-        {
-          "advisor": "Marketing Expert",
-          "soWhat": "This reinforces the importance of owning your content and using other platforms for distribution, which could inform Sourcy's content strategy by prioritizing the company blog and syndicating to LinkedIn or industry-specific forums.",
-          "actionItem": "Develop a content syndication strategy for Sourcy's blog posts.",
+          "id": "startup-gimlet-labs-is-solving-the-ai-inference-bottleneck-in-a-surprisingly-ele",
+          "title": "Startup Gimlet Labs is solving the AI inference bottleneck in a surprisingly elegant way",
+          "link": "https://techcrunch.com/2026/03/23/startup-gimlet-labs-is-solving-the-ai-inference-bottleneck-in-a-surprisingly-elegant-way/",
+          "source": "TechCrunch AI",
+          "pubDate": "Mon, 23 Mar 2026 16:00:00 +0000",
+          "tldr": "Gimlet Labs raised $80M to enable AI to run across various chip architectures simultaneously, addressing the inference bottleneck.",
+          "soWhat": "",
+          "problem": "",
+          "opportunity": null,
+          "advisorLens": "Tech Expert",
           "relevanceScore": 5,
-          "challenge": null
-        }
-      ],
-      "overallRelevance": 5,
-      "isSkippable": false,
-      "isBigStory": false
-    },
-    {
-      "id": "why-i-love-nixos",
-      "title": "Why I love NixOS",
-      "link": "https://www.birkey.co/2026-03-22-why-i-love-nixos.html",
-      "source": "Hacker News",
-      "pubDate": "2026-03-22T17:17:06Z",
-      "snippet": "400 points, 271 comments on HN",
-      "category": "Tech",
-      "tldr": "An individual's positive experience and reasons for using the NixOS operating system.",
-      "primaryAdvisor": "Tech Expert",
-      "perspectives": [
+          "perspectives": []
+        },
         {
-          "advisor": "Tech Expert",
-          "soWhat": "NixOS's declarative configuration and reproducibility could be beneficial for managing the environments of Sourcy's AI agents, ensuring consistency and simplifying deployment across different machines.",
-          "actionItem": "Evaluate NixOS as a potential environment management solution for Sourcy's AI agents.",
+          "id": "littlebird-raises-11m-for-its-ai-assisted-recall-tool-that-reads-your-computer-s",
+          "title": "Littlebird raises $11M for its AI-assisted ‘recall’ tool that reads your computer screen",
+          "link": "https://techcrunch.com/2026/03/23/littlebird-raises-11m-to-capture-context-from-your-computer-so-you-can-query-your-data/",
+          "source": "TechCrunch AI",
+          "pubDate": "Mon, 23 Mar 2026 16:00:00 +0000",
+          "tldr": "Littlebird raised $11M for an AI tool that captures context by reading your screen in real-time to answer questions and automate tasks.",
+          "soWhat": "",
+          "problem": "",
+          "opportunity": null,
+          "advisorLens": "Tech Expert",
           "relevanceScore": 5,
-          "challenge": null
+          "perspectives": []
+        },
+        {
+          "id": "cursor-admits-its-new-coding-model-was-built-on-top-of-moonshot-ais-kimi",
+          "title": "Cursor admits its new coding model was built on top of Moonshot AI’s Kimi",
+          "link": "https://techcrunch.com/2026/03/22/cursor-admits-its-new-coding-model-was-built-on-top-of-moonshot-ais-kimi/",
+          "source": "TechCrunch AI",
+          "pubDate": "Sun, 22 Mar 2026 18:41:09 +0000",
+          "tldr": "Cursor admitted its new coding model was built on top of Moonshot AI's Kimi, raising concerns about geopolitical risks.",
+          "soWhat": "",
+          "problem": "",
+          "opportunity": null,
+          "advisorLens": "Tech Expert",
+          "relevanceScore": 5,
+          "perspectives": []
         }
       ],
-      "overallRelevance": 5,
-      "isSkippable": false,
-      "isBigStory": false
+      "tldr": "",
+      "advisorLens": "Tech Expert"
     },
     {
-      "id": "cyberattack-on-vehicle-breathalyzer-company-leaves-drivers-stranded-in-the-us",
-      "title": "Cyberattack on vehicle breathalyzer company leaves drivers stranded in the US",
-      "link": "https://techcrunch.com/2026/03/20/cyberattack-on-vehicle-breathalyzer-company-leaves-drivers-stranded-across-the-us/",
-      "source": "Hacker News",
-      "pubDate": "2026-03-23T13:13:30Z",
-      "snippet": "78 points, 92 comments on HN",
-      "category": "Tech",
-      "tldr": "A cyberattack on a company providing vehicle breathalyzer devices caused widespread disruption and stranded drivers.",
-      "primaryAdvisor": "Devil's Advocate",
-      "perspectives": [
+      "name": "Startup World",
+      "icon": "💰",
+      "stories": [
         {
-          "advisor": "Devil's Advocate",
-          "soWhat": "While the focus is on the immediate disruption, the bigger question is whether relying on internet-connected devices for safety-critical functions introduces unacceptable risks, especially given the increasing frequency and sophistication of cyberattacks.",
-          "actionItem": "Null",
-          "relevanceScore": 4,
-          "challenge": null
+          "id": "startup-gimlet-labs-is-solving-the-ai-inference-bottleneck-in-a-surprisingly-ele",
+          "title": "Startup Gimlet Labs is solving the AI inference bottleneck in a surprisingly elegant way",
+          "link": "https://techcrunch.com/2026/03/23/startup-gimlet-labs-is-solving-the-ai-inference-bottleneck-in-a-surprisingly-elegant-way/",
+          "source": "TechCrunch",
+          "pubDate": "Mon, 23 Mar 2026 16:00:00 +0000",
+          "tldr": "Gimlet Labs raised $80M to enable AI to run across multiple chip architectures simultaneously, addressing the AI inference bottleneck.",
+          "soWhat": "This signals a potential shift towards heterogeneous computing for AI, which could impact the cost and performance of AI agents Eugene builds for Sourcy.",
+          "problem": "The problem is the increasing cost and complexity of AI inference, especially as models grow larger and require specialized hardware.",
+          "opportunity": "The opportunity is to leverage solutions like Gimlet Labs to optimize AI agent deployment across different cloud providers and hardware configurations, reducing costs and improving performance.",
+          "advisorLens": "CEO Advisor",
+          "relevanceScore": 9,
+          "perspectives": []
+        },
+        {
+          "id": "grab-to-buy-foodpanda-taiwan-from-delivery-hero-for-600-million",
+          "title": "Grab to buy Foodpanda Taiwan from Delivery Hero for $600 million",
+          "link": "https://techcrunch.com/2026/03/23/grab-to-buy-foodpanda-taiwan-from-delivery-hero-for-600-million/",
+          "source": "TechCrunch",
+          "pubDate": "Mon, 23 Mar 2026 15:41:40 +0000",
+          "tldr": "Grab is acquiring Foodpanda's Taiwan business for $600 million, expanding its reach beyond Southeast Asia and challenging Gojek.",
+          "soWhat": "This acquisition indicates Grab's aggressive expansion strategy and its willingness to compete head-to-head with Gojek, which could impact the competitive landscape in Indonesia.",
+          "problem": "The problem is the intense competition in the Southeast Asian delivery market, requiring companies to constantly innovate and expand to maintain market share.",
+          "opportunity": "The opportunity is for Sourcy to leverage the increased competition to negotiate better deals with delivery providers for its B2B sourcing platform.",
+          "advisorLens": "CEO Advisor",
+          "relevanceScore": 8,
+          "perspectives": []
+        },
+        {
+          "id": "sam-altman-backed-fusion-startup-helion-in-talks-with-openai",
+          "title": "Sam Altman-backed fusion startup Helion in talks with OpenAI",
+          "link": "https://techcrunch.com/2026/03/23/sam-altman-backed-fusion-startup-helion-in-talks-with-openai/",
+          "source": "TechCrunch",
+          "pubDate": "Mon, 23 Mar 2026 15:03:36 +0000",
+          "tldr": "Helion, a fusion startup backed by Sam Altman, is negotiating a deal to sell 12.5% of its power output to OpenAI.",
+          "soWhat": "This signals OpenAI's increasing demand for energy to power its AI models and its willingness to invest in alternative energy sources, which could impact the long-term sustainability of AI development.",
+          "problem": "The problem is the growing energy consumption of AI models, which raises concerns about environmental impact and the scalability of AI development.",
+          "opportunity": "The opportunity is for Sourcy to explore energy-efficient AI model architectures and deployment strategies to reduce its carbon footprint and operating costs.",
+          "advisorLens": "CEO Advisor",
+          "relevanceScore": 7,
+          "perspectives": []
         }
       ],
-      "overallRelevance": 4,
-      "isSkippable": false,
-      "isBigStory": false
+      "tldr": "",
+      "advisorLens": "CEO Advisor"
+    },
+    {
+      "name": "Macro & Geopolitics",
+      "icon": "🌍",
+      "stories": [
+        {
+          "id": "hk-police-can-now-demand-phone-passwords-under-new-national-security-rules",
+          "title": "HK police can now demand phone passwords under new national security rules",
+          "link": "https://www.bbc.com/news/articles/ce8j9yj52lro?at_medium=RSS&at_campaign=rss",
+          "source": "BBC World",
+          "pubDate": "Mon, 23 Mar 2026 08:06:25 GMT",
+          "tldr": "Hong Kong police can now demand phone passwords, with non-compliance punishable by jail time and fines.",
+          "soWhat": "",
+          "problem": "",
+          "opportunity": null,
+          "advisorLens": "CEO Advisor",
+          "relevanceScore": 5,
+          "perspectives": []
+        },
+        {
+          "id": "un-warns-earths-climate-being-pushed-beyond-its-limits-as-el-nio-looms",
+          "title": "UN warns Earth's climate being 'pushed beyond its limits' as El Niño looms",
+          "link": "https://www.bbc.com/news/articles/c203rdxkezwo?at_medium=RSS&at_campaign=rss",
+          "source": "BBC World",
+          "pubDate": "Mon, 23 Mar 2026 04:06:22 GMT",
+          "tldr": "The UN warns that the Earth's climate is increasingly unstable as El Niño approaches.",
+          "soWhat": "",
+          "problem": "",
+          "opportunity": null,
+          "advisorLens": "CEO Advisor",
+          "relevanceScore": 5,
+          "perspectives": []
+        }
+      ],
+      "tldr": "",
+      "advisorLens": "CEO Advisor"
+    },
+    {
+      "name": "Indonesia & SEA",
+      "icon": "🇮🇩",
+      "stories": [],
+      "tldr": "No new stories today.",
+      "advisorLens": "PM Expert"
     }
   ],
-  "skipPile": [
+  "correlations": [
     {
-      "id": "migrating-to-the-eu",
-      "title": "Migrating to the EU",
-      "link": "https://rz01.org/eu-migration/",
-      "source": "Hacker News",
-      "pubDate": "2026-03-23T10:17:32Z",
-      "snippet": "625 points, 512 comments on HN",
-      "category": "Geopolitics",
-      "tldr": "An article discussing the complexities and considerations for migrating to the European Union.",
-      "primaryAdvisor": "Devil's Advocate",
-      "perspectives": [
-        {
-          "advisor": "Devil's Advocate",
-          "soWhat": "While the article likely focuses on the benefits, it's crucial to consider the potential downsides of EU migration, such as cultural assimilation challenges, increased competition for jobs, and potential tax implications.",
-          "actionItem": "Null",
-          "relevanceScore": 3,
-          "challenge": null
-        }
-      ],
-      "overallRelevance": 3,
-      "isSkippable": true,
-      "isBigStory": false
+      "segmentA": "Tech + AI",
+      "segmentB": "Startup World",
+      "connection": "Gimlet Labs' $80M raise to solve AI inference bottlenecks could enable more efficient and cost-effective AI agent deployments, a key area for Sourcy's AI initiatives.",
+      "implication": "Eugene should explore Gimlet Labs' technology to potentially reduce the infrastructure costs associated with running Sourcy's AI agents, improving their ROI.",
+      "confidence": "medium"
     },
     {
-      "id": "student-beauty-and-grades-under-in-person-and-remote-teaching",
-      "title": "Student beauty and grades under in-person and remote teaching",
-      "link": "https://www.sciencedirect.com/science/article/pii/S016517652200283X",
-      "source": "Hacker News",
-      "pubDate": "2026-03-23T11:31:19Z",
-      "snippet": "327 points, 341 comments on HN",
-      "category": "Devil's Advocate",
-      "tldr": "A study examining the correlation between student attractiveness and academic performance in different learning environments.",
-      "primaryAdvisor": "Devil's Advocate",
-      "perspectives": [
-        {
-          "advisor": "Devil's Advocate",
-          "soWhat": "The study's premise is inherently problematic and likely reinforces harmful biases, so it's important to critically evaluate the methodology and conclusions rather than accepting them at face value.",
-          "actionItem": "Null",
-          "relevanceScore": 2,
-          "challenge": null
-        }
-      ],
-      "overallRelevance": 2,
-      "isSkippable": true,
-      "isBigStory": false
+      "segmentA": "Startup World",
+      "segmentB": "Indonesia & SEA",
+      "connection": "Grab's acquisition of Foodpanda Taiwan signals a continued consolidation in the Southeast Asian tech landscape, potentially impacting Sourcy's competitive environment.",
+      "implication": "Eugene needs to monitor Grab's evolving strategy and potential expansion into B2B services, as they could become a competitor or a potential partner for Sourcy.",
+      "confidence": "medium"
     },
     {
-      "id": "two-pilots-dead-after-plane-and-ground-vehicle-collide-at-laguardia",
-      "title": "Two pilots dead after plane and ground vehicle collide at LaGuardia",
-      "link": "https://www.bbc.com/news/articles/cy01g522ww4o",
-      "source": "Hacker News",
-      "pubDate": "2026-03-23T07:24:19Z",
-      "snippet": "https:&#x2F;&#x2F;avherald.com&#x2F;h?article=536bb98e",
-      "category": "Geopolitics",
-      "tldr": "A fatal accident occurred at LaGuardia airport involving a plane and a ground vehicle.",
-      "primaryAdvisor": "Devil's Advocate",
-      "perspectives": [
-        {
-          "advisor": "Devil's Advocate",
-          "soWhat": "While tragic, it's important to consider if this isolated incident is being sensationalized and whether it truly reflects a systemic safety issue within the aviation industry, or if it's an outlier event.",
-          "actionItem": "Null",
-          "relevanceScore": 1,
-          "challenge": null
-        }
-      ],
-      "overallRelevance": 1,
-      "isSkippable": true,
-      "isBigStory": false
+      "segmentA": "Macro & Geopolitics",
+      "segmentB": "Tech + AI",
+      "connection": "Cursor's reliance on Moonshot AI's Kimi model and the resulting geopolitical concerns highlight the importance of understanding the provenance and security implications of AI models used in Sourcy's products.",
+      "implication": "Eugene should prioritize due diligence on the AI models Sourcy uses, considering potential geopolitical risks and ensuring compliance with data security regulations, especially given Sourcy's international operations.",
+      "confidence": "high"
+    },
+    {
+      "segmentA": "Macro & Geopolitics",
+      "segmentB": "Indonesia & SEA",
+      "connection": "The UN's warning about climate change and El Niño's impact could disrupt agricultural supply chains in Southeast Asia, affecting Sourcy's commodities sourcing operations.",
+      "implication": "Eugene should integrate climate risk assessments into Sourcy's sourcing strategies and explore alternative sourcing locations or commodities to mitigate potential disruptions caused by El Niño.",
+      "confidence": "high"
     }
   ],
-  "patterns": [],
   "actionItems": [
-    "Investigate the feasibility of deploying smaller, optimized versions of Sourcy's AI agents on mobile devices.",
-    "Brainstorm potential applications of AI agents for automating customer service or support tasks within Sourcy's target market.",
-    "Research and apply relevant optimization techniques from the article to improve the efficiency of Sourcy's AI agents.",
-    "Conduct a thorough evaluation of DSPy's strengths and weaknesses in the context of Sourcy's AI agent development needs.",
-    "Evaluate alternative Git hosting options or implement local backup strategies for critical repositories.",
-    "Audit Sourcy's website for performance bottlenecks and optimize accordingly.",
-    "Develop a content syndication strategy for Sourcy's blog posts.",
-    "Evaluate NixOS as a potential environment management solution for Sourcy's AI agents.",
-    "Null"
+    "The opportunity is to leverage solutions like Gimlet Labs to optimize AI agent deployment across different cloud providers and hardware configurations, reducing costs and improving performance.",
+    "The opportunity is for Sourcy to leverage the increased competition to negotiate better deals with delivery providers for its B2B sourcing platform.",
+    "The opportunity is for Sourcy to explore energy-efficient AI model architectures and deployment strategies to reduce its carbon footprint and operating costs."
   ],
   "metadata": {
-    "totalFetched": 36,
-    "afterDedup": 12,
-    "analyzed": 12,
+    "totalFetched": 49,
+    "afterDedup": 47,
+    "analyzed": 8,
     "fetchErrors": [
-      "Failed to fetch a16z: Status code 404"
+      "Failed to fetch a16z: Status code 404",
+      "Failed to fetch Jakarta Globe: Status code 410",
+      "Failed to fetch Tech in Asia: Status code 403"
     ]
   }
 }

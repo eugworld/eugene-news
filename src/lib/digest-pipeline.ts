@@ -113,14 +113,16 @@ async function dedupWithHistory(articles: RawArticle[]): Promise<RawArticle[]> {
   const recentTitles = new Set<string>();
   const dates = await listDigestDates();
   for (const d of dates.slice(0, 3)) {
-    const digest = await getDigest(d);
-    if (digest) {
-      for (const seg of digest.segments) {
-        for (const s of seg.stories) {
-          recentTitles.add(normalizeTitle(s.title));
+    try {
+      const digest = await getDigest(d);
+      if (digest?.segments) {
+        for (const seg of digest.segments) {
+          for (const s of seg.stories || []) {
+            recentTitles.add(normalizeTitle(s.title));
+          }
         }
       }
-    }
+    } catch {}
   }
 
   // Dedup within today's articles
