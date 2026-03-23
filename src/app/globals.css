@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+:root {
+  --brand: #2ABFAB;
+  --brand-dark: #1fa08e;
+  --bg: #FAFAFA;
+  --card: #FFFFFF;
+  --text: #222222;
+  --text-muted: #6B7280;
+  --border: #E5E7EB;
+}
+
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.advisor-badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 600;
+  color: white;
+}
