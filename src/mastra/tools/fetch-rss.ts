@@ -3,9 +3,10 @@ import { z } from "zod";
 import Parser from "rss-parser";
 
 const parser = new Parser({
-  timeout: 10000,
+  timeout: 15000,
   headers: {
-    "User-Agent": "NewsAgent/1.0",
+    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36",
+    "Accept": "application/rss+xml, application/xml, text/xml, */*",
   },
 });
 

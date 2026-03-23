@@ -1,7 +1,7 @@
 {
   "date": "2026-03-23",
-  "generatedAt": "2026-03-23T17:39:28.990Z",
-  "headline": "Gimlet Labs raised $80M to enable AI to run across multiple ",
+  "generatedAt": "2026-03-23T17:59:30.202Z",
+  "headline": "The UN warns of unprecedented climate imbalance due to El Ni",
   "segments": [
     {
       "name": "Tech + AI",
@@ -27,7 +27,7 @@
           "link": "https://techcrunch.com/2026/03/23/littlebird-raises-11m-to-capture-context-from-your-computer-so-you-can-query-your-data/",
           "source": "TechCrunch AI",
           "pubDate": "Mon, 23 Mar 2026 16:00:00 +0000",
-          "tldr": "Littlebird raised $11M for an AI tool that captures context by reading your screen in real-time to answer questions and automate tasks.",
+          "tldr": "Littlebird raised $11M for an AI tool that captures context from your screen in real-time to answer questions and automate tasks.",
           "soWhat": "",
           "problem": "",
           "opportunity": null,
@@ -58,45 +58,31 @@
       "icon": "💰",
       "stories": [
         {
-          "id": "startup-gimlet-labs-is-solving-the-ai-inference-bottleneck-in-a-surprisingly-ele",
-          "title": "Startup Gimlet Labs is solving the AI inference bottleneck in a surprisingly elegant way",
-          "link": "https://techcrunch.com/2026/03/23/startup-gimlet-labs-is-solving-the-ai-inference-bottleneck-in-a-surprisingly-elegant-way/",
-          "source": "TechCrunch",
-          "pubDate": "Mon, 23 Mar 2026 16:00:00 +0000",
-          "tldr": "Gimlet Labs raised $80M to enable AI to run across multiple chip architectures simultaneously, addressing the AI inference bottleneck.",
-          "soWhat": "This signals a potential shift towards heterogeneous computing for AI, which could impact the cost and performance of AI agents Eugene builds for Sourcy.",
-          "problem": "The problem is the increasing cost and complexity of AI inference, especially as models grow larger and require specialized hardware.",
-          "opportunity": "The opportunity is to leverage solutions like Gimlet Labs to optimize AI agent deployment across different cloud providers and hardware configurations, reducing costs and improving performance.",
-          "advisorLens": "CEO Advisor",
-          "relevanceScore": 9,
-          "perspectives": []
-        },
-        {
           "id": "grab-to-buy-foodpanda-taiwan-from-delivery-hero-for-600-million",
           "title": "Grab to buy Foodpanda Taiwan from Delivery Hero for $600 million",
           "link": "https://techcrunch.com/2026/03/23/grab-to-buy-foodpanda-taiwan-from-delivery-hero-for-600-million/",
           "source": "TechCrunch",
           "pubDate": "Mon, 23 Mar 2026 15:41:40 +0000",
-          "tldr": "Grab is acquiring Foodpanda's Taiwan business for $600 million, expanding its reach beyond Southeast Asia and challenging Gojek.",
-          "soWhat": "This acquisition indicates Grab's aggressive expansion strategy and its willingness to compete head-to-head with Gojek, which could impact the competitive landscape in Indonesia.",
-          "problem": "The problem is the intense competition in the Southeast Asian delivery market, requiring companies to constantly innovate and expand to maintain market share.",
-          "opportunity": "The opportunity is for Sourcy to leverage the increased competition to negotiate better deals with delivery providers for its B2B sourcing platform.",
+          "tldr": "Grab is acquiring Foodpanda Taiwan for $600 million, expanding its reach beyond Southeast Asia.",
+          "soWhat": "",
+          "problem": "",
+          "opportunity": null,
           "advisorLens": "CEO Advisor",
-          "relevanceScore": 8,
+          "relevanceScore": 5,
           "perspectives": []
         },
         {
-          "id": "sam-altman-backed-fusion-startup-helion-in-talks-with-openai",
-          "title": "Sam Altman-backed fusion startup Helion in talks with OpenAI",
-          "link": "https://techcrunch.com/2026/03/23/sam-altman-backed-fusion-startup-helion-in-talks-with-openai/",
+          "id": "startup-gimlet-labs-is-solving-the-ai-inference-bottleneck-in-a-surprisingly-ele",
+          "title": "Startup Gimlet Labs is solving the AI inference bottleneck in a surprisingly elegant way",
+          "link": "https://techcrunch.com/2026/03/23/startup-gimlet-labs-is-solving-the-ai-inference-bottleneck-in-a-surprisingly-elegant-way/",
           "source": "TechCrunch",
-          "pubDate": "Mon, 23 Mar 2026 15:03:36 +0000",
-          "tldr": "Helion, a fusion startup backed by Sam Altman, is negotiating a deal to sell 12.5% of its power output to OpenAI.",
-          "soWhat": "This signals OpenAI's increasing demand for energy to power its AI models and its willingness to invest in alternative energy sources, which could impact the long-term sustainability of AI development.",
-          "problem": "The problem is the growing energy consumption of AI models, which raises concerns about environmental impact and the scalability of AI development.",
-          "opportunity": "The opportunity is for Sourcy to explore energy-efficient AI model architectures and deployment strategies to reduce its carbon footprint and operating costs.",
+          "pubDate": "Mon, 23 Mar 2026 16:00:00 +0000",
+          "tldr": "Gimlet Labs raised $80M for its tech that enables AI to run across various chip architectures simultaneously, addressing the AI inference bottleneck.",
+          "soWhat": "",
+          "problem": "",
+          "opportunity": null,
           "advisorLens": "CEO Advisor",
-          "relevanceScore": 7,
+          "relevanceScore": 5,
           "perspectives": []
         }
       ],
@@ -108,31 +94,31 @@
       "icon": "🌍",
       "stories": [
         {
-          "id": "hk-police-can-now-demand-phone-passwords-under-new-national-security-rules",
-          "title": "HK police can now demand phone passwords under new national security rules",
-          "link": "https://www.bbc.com/news/articles/ce8j9yj52lro?at_medium=RSS&at_campaign=rss",
-          "source": "BBC World",
-          "pubDate": "Mon, 23 Mar 2026 08:06:25 GMT",
-          "tldr": "Hong Kong police can now demand phone passwords, with non-compliance punishable by jail time and fines.",
-          "soWhat": "",
-          "problem": "",
-          "opportunity": null,
-          "advisorLens": "CEO Advisor",
-          "relevanceScore": 5,
-          "perspectives": []
-        },
-        {
           "id": "un-warns-earths-climate-being-pushed-beyond-its-limits-as-el-nio-looms",
           "title": "UN warns Earth's climate being 'pushed beyond its limits' as El Niño looms",
           "link": "https://www.bbc.com/news/articles/c203rdxkezwo?at_medium=RSS&at_campaign=rss",
           "source": "BBC World",
           "pubDate": "Mon, 23 Mar 2026 04:06:22 GMT",
-          "tldr": "The UN warns that the Earth's climate is increasingly unstable as El Niño approaches.",
-          "soWhat": "",
-          "problem": "",
-          "opportunity": null,
+          "tldr": "The UN warns of unprecedented climate imbalance due to El Niño, impacting weather patterns globally.",
+          "soWhat": "Climate change impacts supply chains, potentially disrupting Sourcy's sourcing operations in Southeast Asia and requiring diversification strategies.",
+          "problem": "Unpredictable weather patterns threaten agricultural yields and resource availability, increasing sourcing costs and risks.",
+          "opportunity": "Develop AI-powered risk assessment tools for Sourcy to predict climate-related supply chain disruptions and identify alternative sourcing options.",
           "advisorLens": "CEO Advisor",
-          "relevanceScore": 5,
+          "relevanceScore": 8,
+          "perspectives": []
+        },
+        {
+          "id": "hk-police-can-now-demand-phone-passwords-under-new-national-security-rules",
+          "title": "HK police can now demand phone passwords under new national security rules",
+          "link": "https://www.bbc.com/news/articles/ce8j9yj52lro?at_medium=RSS&at_campaign=rss",
+          "source": "BBC World",
+          "pubDate": "Mon, 23 Mar 2026 08:06:25 GMT",
+          "tldr": "Hong Kong police gain power to demand phone passwords, raising data security and privacy concerns.",
+          "soWhat": "Increased surveillance in Hong Kong could impact data security for Sourcy's suppliers and partners operating there, requiring enhanced encryption and data protection measures.",
+          "problem": "Erosion of data privacy in Hong Kong creates risks for businesses handling sensitive information, potentially leading to compliance issues and reputational damage.",
+          "opportunity": "Offer Sourcy's clients enhanced data security and compliance features as a competitive advantage, addressing concerns about operating in regions with heightened surveillance.",
+          "advisorLens": "CEO Advisor",
+          "relevanceScore": 7,
           "perspectives": []
         }
       ],
@@ -142,54 +128,81 @@
     {
       "name": "Indonesia & SEA",
       "icon": "🇮🇩",
-      "stories": [],
-      "tldr": "No new stories today.",
+      "stories": [
+        {
+          "id": "indonesia-eyes-us47-billion-in-savings-to-brace-for-middle-east-war-impacts",
+          "title": "Indonesia eyes US$4.7 billion in savings to brace for Middle East war impacts",
+          "link": "https://www.channelnewsasia.com/asia/indonesia-us-47-billion-savings-brace-middle-east-war-fuel-6011121",
+          "source": "CNA Asia",
+          "pubDate": "Mon, 23 Mar 2026 16:43:00 +0800",
+          "tldr": "Indonesia is preparing for potential economic fallout from the Middle East conflict by identifying $4.7 billion in savings and considering measures like remote work.",
+          "soWhat": "This signals a potential shift in work culture in Indonesia, which could impact Sourcy's B2B sourcing if more companies adopt remote work policies.",
+          "problem": "Uncertainty in the global economy is forcing Indonesian businesses to re-evaluate operational costs and workforce strategies.",
+          "opportunity": "Sourcy could position itself as a key partner in helping companies optimize their supply chains and adapt to new remote work environments.",
+          "advisorLens": "PM Expert",
+          "relevanceScore": 8,
+          "perspectives": []
+        },
+        {
+          "id": "asian-stocks-tumble-as-gulf-war-rages",
+          "title": "Asian stocks tumble as Gulf war rages",
+          "link": "https://www.channelnewsasia.com/asia/asia-stocks-oil-prices-trump-iran-war-energy-threat-6010356",
+          "source": "CNA Asia",
+          "pubDate": "Mon, 23 Mar 2026 07:12:00 +0800",
+          "tldr": "Asian stock markets are experiencing significant declines due to escalating tensions in the Middle East.",
+          "soWhat": "This market volatility could impact investment decisions and sourcing strategies for Sourcy's clients in the region.",
+          "problem": "Geopolitical instability creates risk aversion and disrupts supply chains, affecting businesses across Asia.",
+          "opportunity": "Sourcy can leverage its AI agents to provide real-time risk assessments and alternative sourcing options to help clients navigate market uncertainty.",
+          "advisorLens": "PM Expert",
+          "relevanceScore": 7,
+          "perspectives": []
+        }
+      ],
+      "tldr": "",
       "advisorLens": "PM Expert"
     }
   ],
   "correlations": [
     {
       "segmentA": "Tech + AI",
-      "segmentB": "Startup World",
-      "connection": "Gimlet Labs' $80M raise to solve AI inference bottlenecks could enable more efficient and cost-effective AI agent deployments, a key area for Sourcy's AI initiatives.",
-      "implication": "Eugene should explore Gimlet Labs' technology to potentially reduce the infrastructure costs associated with running Sourcy's AI agents, improving their ROI.",
+      "segmentB": "Indonesia & SEA",
+      "connection": "Cursor's reliance on Moonshot AI (China) for its coding model raises geopolitical concerns that could impact Indonesian developers and companies using such tools, potentially leading to restrictions or security audits.",
+      "implication": "Eugene should evaluate the geopolitical risks associated with AI tools used at Sourcy, especially those with ties to China, and consider diversifying to mitigate potential disruptions.",
       "confidence": "medium"
     },
     {
       "segmentA": "Startup World",
       "segmentB": "Indonesia & SEA",
-      "connection": "Grab's acquisition of Foodpanda Taiwan signals a continued consolidation in the Southeast Asian tech landscape, potentially impacting Sourcy's competitive environment.",
-      "implication": "Eugene needs to monitor Grab's evolving strategy and potential expansion into B2B services, as they could become a competitor or a potential partner for Sourcy.",
-      "confidence": "medium"
-    },
-    {
-      "segmentA": "Macro & Geopolitics",
-      "segmentB": "Tech + AI",
-      "connection": "Cursor's reliance on Moonshot AI's Kimi model and the resulting geopolitical concerns highlight the importance of understanding the provenance and security implications of AI models used in Sourcy's products.",
-      "implication": "Eugene should prioritize due diligence on the AI models Sourcy uses, considering potential geopolitical risks and ensuring compliance with data security regulations, especially given Sourcy's international operations.",
+      "connection": "Grab's acquisition of Foodpanda Taiwan signals a consolidation trend in the Southeast Asian market, potentially impacting Sourcy's competitive landscape and partnership opportunities.",
+      "implication": "Eugene should analyze the implications of this acquisition on Sourcy's market position and explore potential collaborations or strategic moves to maintain competitiveness.",
       "confidence": "high"
     },
     {
       "segmentA": "Macro & Geopolitics",
       "segmentB": "Indonesia & SEA",
-      "connection": "The UN's warning about climate change and El Niño's impact could disrupt agricultural supply chains in Southeast Asia, affecting Sourcy's commodities sourcing operations.",
-      "implication": "Eugene should integrate climate risk assessments into Sourcy's sourcing strategies and explore alternative sourcing locations or commodities to mitigate potential disruptions caused by El Niño.",
+      "connection": "Indonesia's preparation for economic fallout from the Middle East conflict, including potential remote work measures, could impact Sourcy's operations and supply chain dynamics.",
+      "implication": "Eugene should assess Sourcy's supply chain vulnerabilities and develop contingency plans, including remote work strategies, to mitigate potential disruptions from the Middle East conflict.",
       "confidence": "high"
+    },
+    {
+      "segmentA": "Tech + AI",
+      "segmentB": "Startup World",
+      "connection": "Gimlet Labs' $80M funding to solve the AI inference bottleneck could enable more efficient and cost-effective AI applications for startups, including those in Southeast Asia.",
+      "implication": "Eugene should explore how Gimlet Labs' technology can be leveraged to improve the performance and reduce the cost of AI agents built for Sourcy's B2B sourcing platform.",
+      "confidence": "medium"
     }
   ],
   "actionItems": [
-    "The opportunity is to leverage solutions like Gimlet Labs to optimize AI agent deployment across different cloud providers and hardware configurations, reducing costs and improving performance.",
-    "The opportunity is for Sourcy to leverage the increased competition to negotiate better deals with delivery providers for its B2B sourcing platform.",
-    "The opportunity is for Sourcy to explore energy-efficient AI model architectures and deployment strategies to reduce its carbon footprint and operating costs."
+    "Develop AI-powered risk assessment tools for Sourcy to predict climate-related supply chain disruptions and identify alternative sourcing options.",
+    "Offer Sourcy's clients enhanced data security and compliance features as a competitive advantage, addressing concerns about operating in regions with heightened surveillance.",
+    "Sourcy could position itself as a key partner in helping companies optimize their supply chains and adapt to new remote work environments."
   ],
   "metadata": {
-    "totalFetched": 49,
-    "afterDedup": 47,
-    "analyzed": 8,
+    "totalFetched": 75,
+    "afterDedup": 73,
+    "analyzed": 9,
     "fetchErrors": [
-      "Failed to fetch a16z: Status code 404",
-      "Failed to fetch Jakarta Globe: Status code 410",
-      "Failed to fetch Tech in Asia: Status code 403"
+      "Failed to fetch a16z: Status code 404"
     ]
   }
 }
