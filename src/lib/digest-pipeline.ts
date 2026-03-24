@@ -330,9 +330,19 @@ EMAIL LAYOUT:
 Keep it SCANNABLE. Under 3 minutes to read. Each story is 2 lines max.`
   );
 
+  // Strip markdown code fences that Gemini sometimes wraps around HTML
+  let html = response.text;
+  html = html.replace(/^```(?:html)?[\s\n]*/i, "").replace(/[\s\n]*```[\s\n]*$/i, "").trim();
+  // Ensure it starts with a valid HTML tag
+  if (!html.startsWith("<") && html.includes("<!DOCTYPE") ) {
+    html = html.slice(html.indexOf("<!DOCTYPE"));
+  } else if (!html.startsWith("<") && html.includes("<html")) {
+    html = html.slice(html.indexOf("<html"));
+  }
+
   return {
     subject: `Your Daily Brief — ${digest.headline}`,
-    htmlBody: response.text,
+    htmlBody: html,
   };
 }
 
@@ -440,9 +450,13 @@ export async function runDigestPipeline(): Promise<DailyDigest> {
     else console.log(`Email failed: ${result.error}`);
   }
 
-  // Save HTML locally
-  const fs = await import("fs");
-  fs.writeFileSync(`digest-${date}.html`, htmlBody);
+  // Save HTML locally (only in dev)
+  if (!process.env.VERCEL) {
+    try {
+      const fs = await import("fs");
+      fs.writeFileSync(`digest-${date}.html`, htmlBody);
+    } catch {}
+  }
 
   const elapsed = ((Date.now() - start) / 1000).toFixed(1);
   console.log(`\nDone! ${analyzed} stories, ${correlations.length} connections in ${elapsed}s\n`);

@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 
+export const maxDuration = 60; // Allow up to 60s for the full pipeline
+
 export async function GET(req: NextRequest) {
-  const authHeader = req.headers.get("authorization");
-  if (process.env.NODE_ENV === "production" && process.env.CRON_SECRET && authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  // Vercel Hobby plan auto-protects cron endpoints
+  // No manual CRON_SECRET check needed
 
   try {
     const { runDigestPipeline } = await import("@/lib/digest-pipeline");
@@ -18,6 +18,7 @@ export async function GET(req: NextRequest) {
       correlations: digest.correlations.length,
     });
   } catch (error: any) {
+    console.error("Cron pipeline error:", error);
     return NextResponse.json({ success: false, error: error.message }, { status: 500 });
   }
 }

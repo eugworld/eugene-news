@@ -2,6 +2,8 @@ import { NextRequest } from "next/server";
 import { chatAdvisor } from "@/mastra/agents/chat-advisor";
 import { getStory } from "@/lib/storage";
 
+export const maxDuration = 30;
+
 export async function POST(req: NextRequest) {
   try {
     const { messages, storyId, date } = await req.json();

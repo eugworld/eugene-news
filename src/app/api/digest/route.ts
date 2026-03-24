@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getDigest, getStory } from "@/lib/storage";
 
+export const maxDuration = 60;
+
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const date = searchParams.get("date") || new Date().toISOString().split("T")[0];
@@ -29,6 +31,7 @@ export async function POST() {
       correlations: digest.correlations.length,
     });
   } catch (error: any) {
+    console.error("Digest pipeline error:", error);
     return NextResponse.json({ success: false, error: error.message }, { status: 500 });
   }
 }
