@@ -1,26 +1,55 @@
 "use client";
 
+import React from "react";
+
 interface Props {
   message: { role: "user" | "assistant"; content: string };
 }
 
-/**
- * Simple markdown renderer — handles bold, italic, bullets, headers.
- * No external dependency needed for basic chat formatting.
- */
-function renderMarkdown(text: string) {
-  // Split into paragraphs
+/** Render inline markdown: **bold**, *italic*, `code` */
+function renderInline(text: string): React.ReactNode[] {
+  const parts: React.ReactNode[] = [];
+  const regex = /(\*\*(.+?)\*\*|\*(.+?)\*|`(.+?)`)/g;
+  let lastIndex = 0;
+  let match;
+  let key = 0;
+
+  while ((match = regex.exec(text)) !== null) {
+    if (match.index > lastIndex) {
+      parts.push(text.slice(lastIndex, match.index));
+    }
+    if (match[2]) {
+      parts.push(<strong key={key++} className="font-semibold">{match[2]}</strong>);
+    } else if (match[3]) {
+      parts.push(<em key={key++}>{match[3]}</em>);
+    } else if (match[4]) {
+      parts.push(
+        <code key={key++} className="text-xs bg-gray-200 px-1 py-0.5 rounded font-mono">{match[4]}</code>
+      );
+    }
+    lastIndex = match.index + match[0].length;
+  }
+
+  if (lastIndex < text.length) {
+    parts.push(text.slice(lastIndex));
+  }
+
+  return parts.length > 0 ? parts : [text];
+}
+
+/** Simple markdown renderer for chat messages */
+function renderMarkdown(text: string): React.ReactNode {
   const blocks = text.split(/\n\n+/);
 
   return blocks.map((block, bi) => {
     const trimmed = block.trim();
     if (!trimmed) return null;
 
-    // Check if it's a bullet list
+    // Bullet list
     if (/^[\*\-•]\s/.test(trimmed)) {
       const items = trimmed.split(/\n/).filter((l) => l.trim());
       return (
-        <ul key={bi} className="list-disc list-outside pl-4 my-1.5 space-y-1">
+        <ul key={bi} className="list-disc list-outside pl-4 my-1.5 space-y-0.5">
           {items.map((item, ii) => (
             <li key={ii} className="text-sm leading-relaxed">
               {renderInline(item.replace(/^[\*\-•]\s*/, ""))}
@@ -30,11 +59,11 @@ function renderMarkdown(text: string) {
       );
     }
 
-    // Check if it's a numbered list
+    // Numbered list
     if (/^\d+[\.\)]\s/.test(trimmed)) {
       const items = trimmed.split(/\n/).filter((l) => l.trim());
       return (
-        <ol key={bi} className="list-decimal list-outside pl-4 my-1.5 space-y-1">
+        <ol key={bi} className="list-decimal list-outside pl-4 my-1.5 space-y-0.5">
           {items.map((item, ii) => (
             <li key={ii} className="text-sm leading-relaxed">
               {renderInline(item.replace(/^\d+[\.\)]\s*/, ""))}
@@ -51,47 +80,6 @@ function renderMarkdown(text: string) {
       </p>
     );
   });
-}
-
-/** Render inline markdown: **bold**, *italic*, `code` */
-function renderInline(text: string): (string | JSX.Element)[] {
-  const parts: (string | JSX.Element)[] = [];
-  // Match **bold**, *italic*, `code`
-  const regex = /(\*\*(.+?)\*\*|\*(.+?)\*|`(.+?)`)/g;
-  let lastIndex = 0;
-  let match;
-  let key = 0;
-
-  while ((match = regex.exec(text)) !== null) {
-    // Text before match
-    if (match.index > lastIndex) {
-      parts.push(text.slice(lastIndex, match.index));
-    }
-
-    if (match[2]) {
-      // **bold**
-      parts.push(<strong key={key++} className="font-semibold">{match[2]}</strong>);
-    } else if (match[3]) {
-      // *italic*
-      parts.push(<em key={key++}>{match[3]}</em>);
-    } else if (match[4]) {
-      // `code`
-      parts.push(
-        <code key={key++} className="text-xs bg-gray-200 px-1 py-0.5 rounded font-mono">
-          {match[4]}
-        </code>
-      );
-    }
-
-    lastIndex = match.index + match[0].length;
-  }
-
-  // Remaining text
-  if (lastIndex < text.length) {
-    parts.push(text.slice(lastIndex));
-  }
-
-  return parts.length > 0 ? parts : [text];
 }
 
 export function ChatMessage({ message }: Props) {
