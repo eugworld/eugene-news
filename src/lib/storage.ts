@@ -16,26 +16,27 @@ async function blobPut(key: string, data: string): Promise<void> {
 }
 
 async function blobGet(key: string): Promise<string | null> {
-  // First try: use list to find the blob and get its URL
   try {
-    const { list } = await import("@vercel/blob");
-    const result = await list({ prefix: key, limit: 5 });
-    const blob = result.blobs.find((b) => b.pathname === key);
-    if (!blob) {
-      console.log(`  Blob GET: ${key} not found in list`);
+    const { head } = await import("@vercel/blob");
+    // Use head() to get the CURRENT blob URL (not cached list)
+    try {
+      const blob = await head(key);
+      const res = await fetch(blob.url + "?t=" + Date.now(), { cache: "no-store" });
+      if (!res.ok) return null;
+      return await res.text();
+    } catch {
+      // head() throws if blob doesn't exist — try direct URL construction
+      // Store ID extracted from BLOB_READ_WRITE_TOKEN (vercel_blob_rw_<storeId>_...)
+      const token = process.env.BLOB_READ_WRITE_TOKEN || "";
+      const storeMatch = token.match(/vercel_blob_rw_([a-zA-Z0-9]+)_/);
+      if (storeMatch) {
+        const storeId = storeMatch[1].toLowerCase();
+        const directUrl = `https://${storeId}.public.blob.vercel-storage.com/${key}?t=${Date.now()}`;
+        const res = await fetch(directUrl, { cache: "no-store" });
+        if (res.ok) return await res.text();
+      }
       return null;
     }
-    console.log(`  Blob GET: ${key} found at ${blob.url.slice(0, 60)}... (${blob.size}b)`);
-    // Fetch with no-store to bypass CDN cache
-    const res = await fetch(blob.downloadUrl, {
-      cache: "no-store",
-      headers: { "Cache-Control": "no-cache" },
-    });
-    if (!res.ok) {
-      console.log(`  Blob fetch failed: ${res.status}`);
-      return null;
-    }
-    return await res.text();
   } catch (e) {
     console.log(`  Blob GET error: ${(e as Error).message}`);
     return null;
