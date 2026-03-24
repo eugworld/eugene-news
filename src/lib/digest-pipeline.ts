@@ -152,37 +152,51 @@ async function analyzeSegment(segmentName: SegmentName, advisorLens: string, art
     null, 2
   );
 
-  const response = await newsAnalyst.generate(
-    `You are the ${advisorLens} analyzing ${segmentName} news for Eugene (Product Builder at Sourcy Global, Jakarta, AI agents/PLG expert).
+  const lensContext: Record<string, string> = {
+    "Tech Expert": "Focus on: AI tools Eugene should adopt/watch, architecture decisions for his agents, vibe-coding workflow improvements, what a Stripe/Google PM would do with this tech.",
+    "CEO Advisor": "Focus on: market signals for Sourcy AND Choys, fundraising/business model insights, what this means for Eugene's founder ambitions. Challenge his speed bias.",
+    "PM Expert": "Focus on: product thinking Eugene can steal, user behavior insights, PLG patterns. Relate to BOTH Sourcy (B2B sourcing) AND Choys (AI L&D). Challenge: is he validating or just shipping?",
+  };
 
-Pick the TOP 2-3 most important stories. For each story you MUST fill in ALL fields with meaningful content.
+  const response = await newsAnalyst.generate(
+    `Analyze ${segmentName} news. Pick TOP 2-3 stories that matter most.
+
+${lensContext[advisorLens] || ""}
+
+EUGENE'S FULL CONTEXT (not just Sourcy!):
+- AI builder who ships fast with Claude/Gemini/Mastra — wants to be THE AI PM thought leader
+- Day job: Sourcy Global (B2B commodities sourcing, Jakarta)
+- Side business: Choys (AI-powered corporate L&D platform, 3 enterprise clients)
+- Career goal: Join Google/Stripe-level company within 1-2 years
+- Lives in Jakarta: Rupiah deposits, IDX exposure, Indonesian consumer
+- Blind spots: speed bias, builds but doesn't use, job-hops every 1-2 years
 
 STORIES:
 ${articlesJson}
 
-Return a JSON object. EVERY field is REQUIRED and MUST be non-empty:
+Return JSON. EVERY field MUST be non-empty and insightful:
 {
-  "tldr": "1-2 sentence segment summary of what happened today",
+  "tldr": "Sharp 1-2 sentence summary — what actually happened and why it matters",
   "stories": [
     {
-      "title": "copy exact title from input",
-      "link": "copy exact url from input",
-      "source": "copy source name from input",
-      "tldr": "What happened in 1 sentence",
-      "soWhat": "Why this matters to Eugene specifically - mention Sourcy, AI agents, or Indonesia",
-      "problem": "What market problem or challenge this reveals",
-      "opportunity": "What business opportunity this creates for Eugene, or null if none",
+      "title": "exact title from input",
+      "link": "exact url from input",
+      "source": "source name from input",
+      "tldr": "What happened (1 sentence, factual)",
+      "soWhat": "Why Eugene SPECIFICALLY should care. Pick the RIGHT lens: AI builder identity, Choys, career goals, Indonesian life/finance, OR Sourcy. NOT always Sourcy. Be sharp and challenging. Use 'you' not 'Eugene'.",
+      "problem": "The real underlying problem or tension this reveals — be specific, not generic",
+      "opportunity": "Concrete next step Eugene could take THIS WEEK, or null. Not vague 'could explore' — specific action.",
       "relevanceScore": 7
     }
   ]
 }
 
-CRITICAL RULES:
-- soWhat MUST be filled with a specific, personal insight for Eugene. NEVER leave empty.
-- problem MUST describe a real problem or challenge. NEVER leave empty.
-- tldr MUST summarize the news. NEVER leave empty.
-- MAX 3 stories. Keep each field to 1-2 sentences.
-- Output raw JSON only. Start with { end with }. NO markdown.`
+RULES:
+- soWhat: Rotate perspectives! Don't always default to Sourcy. Consider: AI builder identity, Choys, career, Indonesian life, personal finance.
+- soWhat: Use challenge framing — "You're probably thinking X, but the real insight is Y" or "Here's what a Stripe PM would notice..."
+- problem: Name the REAL tension, not a generic statement
+- opportunity: Specific action for this week, or null. "Build X" is too vague. "Prototype X using Y by Friday" is good.
+- MAX 3 stories. Raw JSON only. Start with { end with }.`
   );
 
   const parsed = parseGeminiJson(response.text);
@@ -228,22 +242,22 @@ async function findCorrelations(segments: Segment[]): Promise<Correlation[]> {
   ).join("\n\n");
 
   const response = await newsAnalyst.generate(
-    `You are Eugene's Board of Advisors doing cross-segment intelligence. Find CONNECTIONS between these news segments.
+    `Find 2-4 cross-segment connections that Eugene would miss if he only read one segment.
 
 ${summaries}
 
-Eugene's context: Lead Product Builder at Sourcy Global (B2B commodities sourcing, Jakarta). Builds AI agents. Interested in PLG, career growth, Indonesia market.
+EUGENE'S CONTEXT: AI builder (ships agents with Claude/Gemini), Sourcy Global (B2B sourcing, Jakarta), Choys (AI L&D platform), career goal = join Google/Stripe, lives in Jakarta (rupiah, IDX, Indonesian consumer).
 
-Find 2-4 cross-segment connections. Think:
-- How does a macro event affect Indonesian business?
-- How does an AI breakthrough connect to a startup trend?
-- How does a geopolitical shift impact supply chains (Sourcy)?
-- What second-order effects link these segments?
+Think second-order effects:
+- How does a macro event affect Eugene's rupiah savings or IDX investments?
+- How does an AI tool connect to a geopolitical shift?
+- What does a startup trend + Indonesia news mean for Choys or Sourcy?
+- What career signal emerges when you combine two segments?
 
-Output a JSON array (NO markdown, raw JSON):
-[{"segmentA":"Tech + AI","segmentB":"Indonesia & SEA","connection":"1 sentence linking them","implication":"so-what for Eugene, 1 sentence","confidence":"high|medium|speculative"}]
+Output JSON array. Be SPECIFIC — name the mechanism, not just "these are related":
+[{"segmentA":"Tech + AI","segmentB":"Indonesia & SEA","connection":"Specific mechanism linking them","implication":"What YOU should do about it — direct, actionable, personal","confidence":"high|medium|speculative"}]
 
-Start with [ end with ]. Max 4 items. Be specific, not generic.`
+Start with [ end with ]. Max 4 items. Raw JSON only.`
   );
 
   const parsed = parseGeminiJson(response.text);
