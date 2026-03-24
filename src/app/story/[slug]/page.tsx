@@ -92,8 +92,24 @@ export default function StoryPage() {
 
             <h1 className="text-xl font-bold leading-snug mb-3">{story.title}</h1>
 
-            {/* TLDR — the executive summary */}
-            <p className="text-[15px] text-[var(--text-muted)] leading-relaxed">{story.tldr}</p>
+            {/* Key Points — executive summary */}
+            {story.keyPoints && story.keyPoints.length > 0 ? (
+              <div>
+                <h4 className="text-[11px] font-semibold text-[var(--text-muted)] uppercase tracking-wide mb-2">
+                  Key Points
+                </h4>
+                <ul className="text-[15px] text-[var(--text)] leading-relaxed space-y-1.5 pl-0 list-none">
+                  {story.keyPoints.map((point, i) => (
+                    <li key={i} className="flex items-start gap-2.5">
+                      <span className="text-[var(--brand)] mt-0.5 shrink-0">•</span>
+                      <span>{point}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : (
+              <p className="text-[15px] text-[var(--text-muted)] leading-relaxed">{story.tldr}</p>
+            )}
           </div>
 
           {/* Key Points — structured breakdown */}

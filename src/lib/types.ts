@@ -24,6 +24,7 @@ export interface SegmentStory {
   source: string;
   pubDate: string;
   tldr: string;
+  keyPoints: string[];   // 2-3 bullet points: what actually happened (facts only)
   soWhat: string;
   problem: string;
   opportunity: string | null;

@@ -55,10 +55,21 @@ export function StoryCard({ story, date }: Props) {
           </a>
         </h3>
 
-        {/* Row 3: TLDR — the factual one-liner */}
-        <p className="text-sm text-[var(--text-muted)] leading-relaxed mb-3">
-          {story.tldr}
-        </p>
+        {/* Row 3: Key Points — executive summary bullets */}
+        {story.keyPoints && story.keyPoints.length > 0 ? (
+          <ul className="text-sm text-[var(--text)] leading-relaxed mb-3 space-y-1 pl-0 list-none">
+            {story.keyPoints.map((point, i) => (
+              <li key={i} className="flex items-start gap-2">
+                <span className="text-[var(--text-muted)] mt-0.5 shrink-0">•</span>
+                <span>{point}</span>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="text-sm text-[var(--text-muted)] leading-relaxed mb-3">
+            {story.tldr}
+          </p>
+        )}
 
         {/* Row 4: So What — the INSIGHT (always visible, this is the star) */}
         <div className="bg-gray-50 rounded-lg px-4 py-3 mb-2">

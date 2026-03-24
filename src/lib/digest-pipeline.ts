@@ -204,7 +204,8 @@ Return JSON:
       "title": "exact title from input",
       "link": "exact url from input",
       "source": "source name from input",
-      "tldr": "What happened (1 sentence)",
+      "tldr": "What happened (1 sentence, factual)",
+      "keyPoints": ["Key fact 1 — the most important number or event", "Key fact 2 — who is involved and what they did", "Key fact 3 — what happens next or why it matters (optional)"],
       "soWhat": "Use the PRIMARY LENS above. Address Eugene as 'you'. Be sharp, opinionated, challenging. Max 2 sentences.",
       "problem": "The real tension or risk — be specific. Max 1 sentence.",
       "opportunity": "Specific action for THIS WEEK with a concrete deliverable, or null. Not 'could explore' — name the tool, the deadline, the output.",
@@ -212,6 +213,8 @@ Return JSON:
     }
   ]
 }
+
+CRITICAL: keyPoints must be 2-3 SHORT bullet points of FACTS only (no opinion). Like a CEO briefing: what happened, how much, who, what next.
 
 MAX 3 stories. Raw JSON only. Start with { end with }.`
   );
@@ -235,7 +238,7 @@ MAX 3 stories. Raw JSON only. Start with { end with }.`
     source: s.source || "",
     pubDate: articles.find((a) => normalizeTitle(a.title) === normalizeTitle(s.title))?.pubDate || new Date().toISOString(),
     tldr: s.tldr || "",
-    // Handle both camelCase and snake_case from Gemini
+    keyPoints: Array.isArray(s.keyPoints || s.key_points) ? (s.keyPoints || s.key_points) : [],
     soWhat: s.soWhat || s.so_what || s.sowhat || "",
     problem: s.problem || "",
     opportunity: s.opportunity || null,
@@ -343,8 +346,10 @@ function composeEmailHtml(digest: DailyDigest): { subject: string; htmlBody: str
           <span style="font-size:12px;font-weight:600;color:${st.relevanceScore >= 8 ? '#2ABFAB' : '#F59E0B'};margin-left:8px;">${st.relevanceScore}/10</span>
         </div>
         <h3 style="margin:8px 0 4px;font-size:16px;"><a href="${st.link}" style="color:#1E40AF;text-decoration:none;">${st.title}</a></h3>
-        <p style="font-size:14px;color:#374151;margin:4px 0;">${st.tldr}</p>
-        <p style="font-size:13px;color:#6B7280;margin:4px 0;"><strong>So what:</strong> ${st.soWhat}</p>
+        ${st.keyPoints && st.keyPoints.length > 0 ? st.keyPoints.map((kp: string) => `<p style="font-size:13px;color:#374151;margin:2px 0;padding-left:12px;">• ${kp}</p>`).join("") : `<p style="font-size:14px;color:#374151;margin:4px 0;">${st.tldr}</p>`}
+        <div style="background:#F9FAFB;border-radius:6px;padding:10px 12px;margin:8px 0;">
+          <p style="font-size:13px;margin:0;"><strong style="color:#374151;">So what:</strong> <span style="color:#374151;">${st.soWhat}</span></p>
+        </div>
         ${st.problem ? `<p style="font-size:12px;color:#6B7280;margin:4px 0;"><strong>Problem:</strong> ${st.problem}${st.opportunity ? ` · <strong>Opportunity:</strong> ${st.opportunity}` : ''}</p>` : ''}
         <a href="${APP_URL}/story/${st.id}?date=${digest.date}" style="display:inline-block;background:#2ABFAB;color:#fff;padding:8px 16px;border-radius:6px;text-decoration:none;font-size:13px;font-weight:600;margin-top:8px;">Go Deeper →</a>
       </div>
