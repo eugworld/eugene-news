@@ -10,6 +10,7 @@ interface Props {
 
 export function StoryCard({ story, date }: Props) {
   const [expanded, setExpanded] = useState(false);
+  const [taskDone, setTaskDone] = useState(false);
 
   const scoreColor =
     story.relevanceScore >= 9
@@ -20,9 +21,10 @@ export function StoryCard({ story, date }: Props) {
           ? "#F59E0B"
           : "#6B7280";
 
+  const hasTask = story.opportunity && story.opportunity !== "null" && story.opportunity.length > 5;
+
   return (
-    <div className="group">
-      {/* Main card — always visible */}
+    <div className={`group transition-opacity ${taskDone ? "opacity-60" : ""}`}>
       <div className="px-5 py-4">
         {/* Row 1: Score + Source + Go Deeper */}
         <div className="flex items-center justify-between mb-2">
@@ -34,6 +36,11 @@ export function StoryCard({ story, date }: Props) {
               {story.relevanceScore}/10
             </span>
             <span className="text-xs text-[var(--text-muted)]">{story.source}</span>
+            {taskDone && (
+              <span className="text-[10px] font-medium text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">
+                ✓ Done
+              </span>
+            )}
           </div>
           <a
             href={`/story/${story.id}?date=${date}`}
@@ -44,7 +51,7 @@ export function StoryCard({ story, date }: Props) {
         </div>
 
         {/* Row 2: Title */}
-        <h3 className="font-semibold text-[15px] leading-snug mb-1.5">
+        <h3 className={`font-semibold text-[15px] leading-snug mb-1.5 ${taskDone ? "line-through decoration-1" : ""}`}>
           <a
             href={story.link}
             target="_blank"
@@ -57,10 +64,10 @@ export function StoryCard({ story, date }: Props) {
 
         {/* Row 3: Key Points — executive summary bullets */}
         {story.keyPoints && story.keyPoints.length > 0 ? (
-          <ul className="text-sm text-[var(--text)] leading-relaxed mb-3 space-y-1 pl-0 list-none">
+          <ul className="text-[13px] text-[var(--text)] leading-relaxed mb-3 space-y-0.5 pl-0 list-none">
             {story.keyPoints.map((point, i) => (
               <li key={i} className="flex items-start gap-2">
-                <span className="text-[var(--text-muted)] mt-0.5 shrink-0">•</span>
+                <span className="text-[var(--text-muted)] mt-0.5 shrink-0 text-[11px]">•</span>
                 <span>{point}</span>
               </li>
             ))}
@@ -71,7 +78,7 @@ export function StoryCard({ story, date }: Props) {
           </p>
         )}
 
-        {/* Row 4: So What — the INSIGHT (always visible, this is the star) */}
+        {/* Row 4: So What — the INSIGHT */}
         <div className="bg-gray-50 rounded-lg px-4 py-3 mb-2">
           <p className="text-sm leading-relaxed">
             <span className="font-semibold text-[var(--text)]">So what: </span>
@@ -79,8 +86,36 @@ export function StoryCard({ story, date }: Props) {
           </p>
         </div>
 
-        {/* Row 5: Expandable Problem + Opportunity */}
-        {(story.problem || story.opportunity) && (
+        {/* Row 5: Task Checkpoint (if opportunity exists) */}
+        {hasTask && (
+          <button
+            onClick={() => setTaskDone(!taskDone)}
+            className={`w-full text-left flex items-start gap-2.5 rounded-lg px-4 py-3 mb-2 border cursor-pointer transition-all ${
+              taskDone
+                ? "bg-emerald-50 border-emerald-200"
+                : "bg-[#2ABFAB08] border-[#2ABFAB33] hover:border-[#2ABFAB66]"
+            }`}
+          >
+            <span className={`mt-0.5 shrink-0 w-4 h-4 rounded border-2 flex items-center justify-center text-[10px] transition-all ${
+              taskDone
+                ? "bg-emerald-500 border-emerald-500 text-white"
+                : "border-[var(--brand)] bg-white"
+            }`}>
+              {taskDone ? "✓" : ""}
+            </span>
+            <div className="flex-1 min-w-0">
+              <h4 className="text-[11px] font-semibold uppercase tracking-wide mb-0.5" style={{ color: taskDone ? "#059669" : "var(--brand)" }}>
+                {taskDone ? "Completed" : "Action This Week"}
+              </h4>
+              <p className={`text-sm leading-relaxed ${taskDone ? "line-through text-[var(--text-muted)]" : "text-[var(--text)]"}`}>
+                {story.opportunity}
+              </p>
+            </div>
+          </button>
+        )}
+
+        {/* Row 6: Expandable Problem */}
+        {story.problem && (
           <>
             <button
               onClick={() => setExpanded(!expanded)}
@@ -92,27 +127,15 @@ export function StoryCard({ story, date }: Props) {
               >
                 ▶
               </span>
-              {expanded ? "Less" : "Problem & Opportunity"}
+              {expanded ? "Less" : "Underlying problem"}
             </button>
 
             {expanded && (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mt-2 animate-fadeIn">
-                {story.problem && (
-                  <div className="rounded-lg px-4 py-3 border border-[var(--border)] bg-white">
-                    <h4 className="text-[11px] font-semibold text-[var(--text-muted)] uppercase tracking-wide mb-1">
-                      Problem
-                    </h4>
-                    <p className="text-sm text-[var(--text)] leading-relaxed">{story.problem}</p>
-                  </div>
-                )}
-                {story.opportunity && story.opportunity !== "null" && (
-                  <div className="rounded-lg px-4 py-3 border border-[#2ABFAB33] bg-[#2ABFAB08]">
-                    <h4 className="text-[11px] font-semibold text-[var(--brand)] uppercase tracking-wide mb-1">
-                      This Week
-                    </h4>
-                    <p className="text-sm text-[var(--text)] leading-relaxed">{story.opportunity}</p>
-                  </div>
-                )}
+              <div className="mt-2 animate-fadeIn rounded-lg px-4 py-3 border border-[var(--border)] bg-white">
+                <h4 className="text-[11px] font-semibold text-[var(--text-muted)] uppercase tracking-wide mb-1">
+                  The Real Problem
+                </h4>
+                <p className="text-sm text-[var(--text)] leading-relaxed">{story.problem}</p>
               </div>
             )}
           </>

@@ -205,7 +205,7 @@ Return JSON:
       "link": "exact url from input",
       "source": "source name from input",
       "tldr": "What happened (1 sentence, factual)",
-      "keyPoints": ["Key fact 1 — the most important number or event", "Key fact 2 — who is involved and what they did", "Key fact 3 — what happens next or why it matters (optional)"],
+      "keyPoints": ["$80M raised from Sequoia and a16z at $400M valuation", "Their chip-agnostic runtime cuts inference costs 3x vs. native CUDA", "Currently used by 200+ enterprise customers including Uber and Stripe"],
       "soWhat": "Use the PRIMARY LENS above. Address Eugene as 'you'. Be sharp, opinionated, challenging. Max 2 sentences.",
       "problem": "The real tension or risk — be specific. Max 1 sentence.",
       "opportunity": "Specific action for THIS WEEK with a concrete deliverable, or null. Not 'could explore' — name the tool, the deadline, the output.",
@@ -214,7 +214,14 @@ Return JSON:
   ]
 }
 
-CRITICAL: keyPoints must be 2-3 SHORT bullet points of FACTS only (no opinion). Like a CEO briefing: what happened, how much, who, what next.
+CRITICAL RULES FOR keyPoints:
+- Must contain SPECIFIC FACTS from the article: dollar amounts, percentages, company names, timelines, metrics
+- BAD: "Company raised money" (just restating headline)
+- BAD: "The tool does X" (too vague)
+- GOOD: "$80M Series B led by Sequoia at $400M valuation"
+- GOOD: "Cuts inference costs 3x compared to native CUDA"
+- GOOD: "200+ enterprise customers including Uber and Stripe"
+- Think: What numbers, names, and specifics would a CEO want to know?
 
 MAX 3 stories. Raw JSON only. Start with { end with }.`
   );
