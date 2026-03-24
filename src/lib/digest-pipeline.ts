@@ -155,41 +155,46 @@ async function analyzeSegment(segmentName: SegmentName, advisorLens: string, art
   const response = await newsAnalyst.generate(
     `You are the ${advisorLens} analyzing ${segmentName} news for Eugene (Product Builder at Sourcy Global, Jakarta, AI agents/PLG expert).
 
-Pick the TOP 2-3 most important stories ONLY. Skip noise.
+Pick the TOP 2-3 most important stories. For each story you MUST fill in ALL fields with meaningful content.
 
 STORIES:
 ${articlesJson}
 
-Output a JSON object (NO markdown fences, raw JSON only):
+Return a JSON object. EVERY field is REQUIRED and MUST be non-empty:
 {
-  "tldr": "1-2 sentence segment summary",
+  "tldr": "1-2 sentence segment summary of what happened today",
   "stories": [
     {
-      "title": "exact title",
-      "link": "url",
-      "source": "source name",
-      "tldr": "1 sentence max",
-      "soWhat": "Why Eugene should care (1 sentence)",
-      "problem": "What problem this reveals (1 sentence)",
-      "opportunity": "What opportunity this creates, or null",
-      "relevanceScore": 8
+      "title": "copy exact title from input",
+      "link": "copy exact url from input",
+      "source": "copy source name from input",
+      "tldr": "What happened in 1 sentence",
+      "soWhat": "Why this matters to Eugene specifically - mention Sourcy, AI agents, or Indonesia",
+      "problem": "What market problem or challenge this reveals",
+      "opportunity": "What business opportunity this creates for Eugene, or null if none",
+      "relevanceScore": 7
     }
   ]
 }
 
-Rules:
-- MAX 3 stories. Quality over quantity.
-- Every field must be SHORT (1 sentence max).
-- problem/opportunity framing: think like a PM analyzing the market.
-- soWhat must be personal to Eugene's work (Sourcy, AI agents, Indonesia, PLG).
-- Skip anything that's noise or hype without substance.
-- Start with { and end with }. NO backticks.`
+CRITICAL RULES:
+- soWhat MUST be filled with a specific, personal insight for Eugene. NEVER leave empty.
+- problem MUST describe a real problem or challenge. NEVER leave empty.
+- tldr MUST summarize the news. NEVER leave empty.
+- MAX 3 stories. Keep each field to 1-2 sentences.
+- Output raw JSON only. Start with { end with }. NO markdown.`
   );
 
   const parsed = parseGeminiJson(response.text);
   if (!parsed || !parsed.stories) {
-    console.log(`   ${segmentName}: parse failed`);
+    console.log(`   ${segmentName}: parse failed. Raw response: ${response.text.slice(0, 300)}`);
     return { name: segmentName, icon: getSegmentIcon(segmentName), stories: [], tldr: "Analysis failed.", advisorLens };
+  }
+
+  // Log first story fields to debug empty values
+  if (parsed.stories[0]) {
+    const s0 = parsed.stories[0];
+    console.log(`   ${segmentName} sample: soWhat="${s0.soWhat || s0.so_what || ''}", problem="${s0.problem || ''}", so_what="${s0.so_what || 'N/A'}"`);
   }
 
   const stories: SegmentStory[] = parsed.stories.map((s: any) => ({
@@ -199,11 +204,12 @@ Rules:
     source: s.source || "",
     pubDate: articles.find((a) => normalizeTitle(a.title) === normalizeTitle(s.title))?.pubDate || new Date().toISOString(),
     tldr: s.tldr || "",
-    soWhat: s.soWhat || "",
+    // Handle both camelCase and snake_case from Gemini
+    soWhat: s.soWhat || s.so_what || s.sowhat || "",
     problem: s.problem || "",
     opportunity: s.opportunity || null,
     advisorLens,
-    relevanceScore: s.relevanceScore || 5,
+    relevanceScore: s.relevanceScore || s.relevance_score || 5,
     perspectives: [],
   }));
 

@@ -10,8 +10,10 @@ function parseGeminiJson(text: string): any {
   try { return JSON.parse(cleaned); } catch {}
   cleaned = text.replace(/```(?:json)?/gi, "").replace(/```/g, "").trim();
   try { return JSON.parse(cleaned); } catch {}
-  const match = cleaned.match(/\[[\s\S]*\]/);
-  if (match) try { return JSON.parse(match[0]); } catch {}
+  const arrMatch = cleaned.match(/\[[\s\S]*\]/);
+  if (arrMatch) try { return JSON.parse(arrMatch[0]); } catch {}
+  const objMatch = cleaned.match(/\{[\s\S]*\}/);
+  if (objMatch) try { return JSON.parse(`[${objMatch[0]}]`); } catch {}
   return null;
 }
 
@@ -30,46 +32,73 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ perspectives: story.perspectives });
     }
 
+    console.log(`Generating perspectives for: ${story.title}`);
+
     // Generate 7 advisor perspectives
     const response = await newsAnalyst.generate(
-      `Generate 7 advisor perspectives for this story. MAX 15 words per field.
+      `Generate exactly 7 advisor perspectives for this news story.
 
 Story: "${story.title}"
-TL;DR: ${story.tldr}
-So What: ${story.soWhat}
-Problem: ${story.problem}
+Source: ${story.source}
+Summary: ${story.tldr || "N/A"}
+Context: Eugene is a Product Builder at Sourcy Global (Jakarta), building AI agents for B2B commodities sourcing.
 
-Advisors: Tech Expert, CEO Advisor, PM Expert, Career Expert, Marketing Expert, Design Expert, Devil's Advocate.
+For EACH of these 7 advisors, provide a unique perspective:
+1. Tech Expert - technical implications
+2. CEO Advisor - business/market strategy
+3. PM Expert - product thinking
+4. Career Expert - career/hiring impact
+5. Marketing Expert - distribution/growth angle
+6. Design Expert - UX/design patterns
+7. Devil's Advocate - contrarian view, what's overhyped
 
-Output JSON array: [{"advisor":"Tech Expert","soWhat":"short","actionItem":"or null","relevanceScore":7,"challenge":"short question"}]
+Return a JSON array with EXACTLY 7 objects:
+[
+  {"advisor": "Tech Expert", "soWhat": "Technical insight in 1 sentence", "actionItem": "Concrete next step or null", "relevanceScore": 7, "challenge": "Provocative question for Eugene"},
+  {"advisor": "CEO Advisor", "soWhat": "...", "actionItem": "...", "relevanceScore": 7, "challenge": "..."},
+  ...5 more advisors
+]
 
-7 items total. Raw JSON only. No backticks. Start with [.`
+RULES:
+- EXACTLY 7 items in the array, one per advisor
+- Every soWhat MUST be filled with a non-empty insight
+- challenge should push back on assumptions
+- Raw JSON array only. Start with [ end with ]. NO markdown fences.`
     );
 
+    console.log(`Perspectives raw response (first 200): ${response.text.slice(0, 200)}`);
+
     const parsed = parseGeminiJson(response.text);
-    if (!parsed || !Array.isArray(parsed)) {
-      return NextResponse.json({ error: "Failed to generate perspectives" }, { status: 500 });
+    if (!parsed || !Array.isArray(parsed) || parsed.length === 0) {
+      console.error(`Failed to parse perspectives. Raw: ${response.text.slice(0, 500)}`);
+      return NextResponse.json({ error: "Failed to generate perspectives", raw: response.text.slice(0, 200) }, { status: 500 });
     }
 
     const perspectives: AdvisorPerspective[] = parsed.map((p: any) => ({
-      advisor: p.advisor || "Tech Expert",
-      soWhat: p.soWhat || "",
-      actionItem: p.actionItem || null,
-      relevanceScore: p.relevanceScore || 5,
+      advisor: p.advisor || "Unknown",
+      soWhat: p.soWhat || p.so_what || p.sowhat || "No perspective available",
+      actionItem: p.actionItem || p.action_item || null,
+      relevanceScore: p.relevanceScore || p.relevance_score || 5,
       challenge: p.challenge || null,
     }));
 
     // Save back to digest
-    const digest = await getDigest(date);
-    if (digest) {
-      for (const seg of digest.segments) {
-        const found = seg.stories.find((s) => s.id === storyId);
-        if (found) {
-          found.perspectives = perspectives;
-          break;
+    try {
+      const digest = await getDigest(date);
+      if (digest) {
+        for (const seg of digest.segments) {
+          const found = seg.stories.find((s) => s.id === storyId);
+          if (found) {
+            found.perspectives = perspectives;
+            break;
+          }
         }
+        await saveDigest(date, digest);
+        console.log(`Saved ${perspectives.length} perspectives for ${storyId}`);
       }
-      await saveDigest(date, digest);
+    } catch (saveErr) {
+      console.error("Failed to save perspectives:", saveErr);
+      // Still return perspectives even if save fails
     }
 
     return NextResponse.json({ perspectives });
