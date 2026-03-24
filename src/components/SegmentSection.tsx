@@ -8,32 +8,44 @@ interface Props {
 }
 
 export function SegmentSection({ segment, date }: Props) {
-  const borderColor = SEGMENT_COLORS[segment.name] || "#6B7280";
+  const color = SEGMENT_COLORS[segment.name] || "#6B7280";
 
   if (segment.stories.length === 0) return null;
 
   return (
-    <div
-      className="bg-white rounded-xl border border-[var(--border)] overflow-hidden"
-      style={{ borderLeftWidth: 4, borderLeftColor: borderColor }}
-    >
-      <div className="p-4 pb-2">
-        <div className="flex items-center justify-between mb-1">
-          <h2 className="text-base font-bold flex items-center gap-2">
-            <span>{segment.icon}</span> {segment.name}
-          </h2>
-          <span className="text-xs text-[var(--text-muted)] bg-gray-100 px-2 py-0.5 rounded-full">
+    <section className="bg-white rounded-xl border border-[var(--border)] overflow-hidden">
+      {/* Segment header */}
+      <div className="px-5 pt-5 pb-4">
+        <div className="flex items-center justify-between mb-2">
+          <div className="flex items-center gap-2.5">
+            <span className="text-lg">{segment.icon}</span>
+            <h2 className="text-base font-bold text-[var(--text)]">{segment.name}</h2>
+            <span className="text-xs text-[var(--text-muted)]">·</span>
+            <span className="text-xs text-[var(--text-muted)]">{segment.stories.length} stories</span>
+          </div>
+          <span
+            className="text-[11px] font-medium px-2.5 py-1 rounded-full"
+            style={{ backgroundColor: `${color}12`, color }}
+          >
             {segment.advisorLens}
           </span>
         </div>
-        <p className="text-sm text-[var(--text-muted)]">{segment.tldr}</p>
+
+        {/* Segment TLDR */}
+        {segment.tldr && (
+          <p className="text-sm text-[var(--text-muted)] leading-relaxed">{segment.tldr}</p>
+        )}
       </div>
 
-      <div className="divide-y divide-[var(--border)]">
+      {/* Divider */}
+      <div className="border-t border-[var(--border)]" />
+
+      {/* Stories */}
+      <div>
         {segment.stories.map((story) => (
           <StoryCard key={story.id} story={story} date={date} />
         ))}
       </div>
-    </div>
+    </section>
   );
 }

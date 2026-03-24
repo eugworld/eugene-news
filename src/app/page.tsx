@@ -43,20 +43,20 @@ export default async function HomePage({
         metadata={digest.metadata}
       />
 
-      {/* Segments */}
-      <div className="space-y-6 mb-8">
+      {/* Segments — generous spacing between cards */}
+      <div className="space-y-5 mb-10">
         {digest.segments.map((segment) => (
           <SegmentSection key={segment.name} segment={segment} date={digest.date} />
         ))}
       </div>
 
-      {/* Correlations */}
+      {/* Connections — cross-segment intelligence */}
       {digest.correlations.length > 0 && (
-        <section className="mb-8">
-          <h2 className="text-lg font-bold mb-3 flex items-center gap-2">
-            <span>🔗</span> Connections
+        <section className="mb-10">
+          <h2 className="text-base font-bold mb-4 flex items-center gap-2">
+            <span>🔗</span> Cross-Segment Connections
           </h2>
-          <div className="space-y-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {digest.correlations.map((c, i) => (
               <CorrelationCard key={i} correlation={c} />
             ))}
@@ -66,7 +66,7 @@ export default async function HomePage({
 
       {/* Action Items */}
       {digest.actionItems.length > 0 && (
-        <section className="mb-8">
+        <section className="mb-10">
           <ActionItems items={digest.actionItems} />
         </section>
       )}
