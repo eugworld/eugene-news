@@ -3,7 +3,7 @@ import { fetchHackerNewsTool } from "@/mastra/tools/fetch-hackernews";
 import { fetchNewsApiTool } from "@/mastra/tools/fetch-newsapi";
 import { sendEmailTool } from "@/mastra/tools/send-email";
 import { newsAnalyst } from "@/mastra/agents/news-analyst";
-import { digestComposer } from "@/mastra/agents/digest-composer";
+// digestComposer removed — using deterministic HTML template for speed
 import { saveDigest, slugify, listDigestDates, getDigest } from "./storage";
 import type { RawArticle, Segment, SegmentStory, Correlation, DailyDigest, SegmentName } from "./types";
 
@@ -289,56 +289,84 @@ Raw JSON only. No backticks. Start with [.`
   }
 }
 
-// === STEP 6: COMPOSE EMAIL ===
-async function composeEmail(digest: DailyDigest): Promise<{ subject: string; htmlBody: string }> {
-  console.log("Step 6: Composing segment-based email...");
+// === STEP 6: COMPOSE EMAIL (deterministic HTML, no AI call needed) ===
+function composeEmailHtml(digest: DailyDigest): { subject: string; htmlBody: string } {
+  console.log("Step 6: Composing email (template-based, no AI call)...");
 
   const today = new Date().toLocaleDateString("en-US", { weekday: "long", year: "numeric", month: "long", day: "numeric" });
 
-  const segmentSummary = digest.segments.map((s) =>
-    `${s.icon} ${s.name} (${s.advisorLens}):\nSegment TLDR: ${s.tldr}\n${s.stories.map((st) => `- "${st.title}" [${st.source}]: ${st.tldr} | So what: ${st.soWhat} | ID: ${st.id}`).join("\n")}`
-  ).join("\n\n");
+  const segmentColors: Record<string, string> = { "Tech + AI": "#3B82F6", "Startup World": "#8B5CF6", "Macro & Geopolitics": "#F59E0B", "Indonesia & SEA": "#EF4444" };
 
-  const correlationSummary = digest.correlations.map((c) =>
-    `${c.segmentA} ↔ ${c.segmentB}: ${c.connection} → ${c.implication} [${c.confidence}]`
-  ).join("\n");
+  const segmentsHtml = digest.segments.map((s) => {
+    const color = segmentColors[s.name] || "#6B7280";
+    const storiesHtml = s.stories.map((st) => `
+      <div style="background:#fff;border:1px solid #E5E7EB;border-radius:8px;padding:16px;margin-bottom:12px;">
+        <div style="margin-bottom:4px;">
+          <span style="font-size:12px;color:#6B7280;background:#F3F4F6;padding:2px 8px;border-radius:4px;">${st.source}</span>
+          <span style="font-size:12px;font-weight:600;color:${st.relevanceScore >= 8 ? '#2ABFAB' : '#F59E0B'};margin-left:8px;">${st.relevanceScore}/10</span>
+        </div>
+        <h3 style="margin:8px 0 4px;font-size:16px;"><a href="${st.link}" style="color:#1E40AF;text-decoration:none;">${st.title}</a></h3>
+        <p style="font-size:14px;color:#374151;margin:4px 0;">${st.tldr}</p>
+        <p style="font-size:13px;color:#6B7280;margin:4px 0;"><strong>So what:</strong> ${st.soWhat}</p>
+        ${st.problem ? `<p style="font-size:12px;color:#6B7280;margin:4px 0;"><strong>Problem:</strong> ${st.problem}${st.opportunity ? ` · <strong>Opportunity:</strong> ${st.opportunity}` : ''}</p>` : ''}
+        <a href="${APP_URL}/story/${st.id}?date=${digest.date}" style="display:inline-block;background:#2ABFAB;color:#fff;padding:8px 16px;border-radius:6px;text-decoration:none;font-size:13px;font-weight:600;margin-top:8px;">Go Deeper →</a>
+      </div>
+    `).join("");
 
-  const response = await digestComposer.generate(
-    `Compose today's segment-based news digest email.
+    return `
+      <div style="margin-bottom:24px;">
+        <div style="border-left:4px solid ${color};padding:12px 16px;background:#FAFAFA;border-radius:0 8px 8px 0;margin-bottom:12px;">
+          <h2 style="margin:0;font-size:18px;">${s.icon} ${s.name}</h2>
+          <p style="margin:4px 0 0;font-size:14px;color:#6B7280;">${s.tldr}</p>
+        </div>
+        ${storiesHtml}
+      </div>
+    `;
+  }).join("");
 
-DATE: ${today}
-HEADLINE: ${digest.headline}
-APP_URL: ${APP_URL}
-DATE_PARAM: ${digest.date}
+  const correlationsHtml = digest.correlations.length > 0 ? `
+    <div style="margin-bottom:24px;">
+      <h2 style="font-size:18px;margin-bottom:12px;">🔗 Connections</h2>
+      ${digest.correlations.map((c) => `
+        <div style="background:#F5F3FF;border:2px dashed #C4B5FD;border-radius:8px;padding:14px;margin-bottom:10px;">
+          <div style="font-size:13px;font-weight:600;color:#7C3AED;margin-bottom:4px;">${c.segmentA} ↔ ${c.segmentB}</div>
+          <p style="font-size:14px;margin:4px 0;">${c.connection}</p>
+          <p style="font-size:13px;color:#6B7280;margin:4px 0;">→ ${c.implication}</p>
+          <span style="font-size:11px;background:${c.confidence === 'high' ? '#D1FAE5' : c.confidence === 'medium' ? '#FEF3C7' : '#F3F4F6'};color:${c.confidence === 'high' ? '#065F46' : c.confidence === 'medium' ? '#92400E' : '#6B7280'};padding:2px 8px;border-radius:4px;">${c.confidence}</span>
+        </div>
+      `).join("")}
+    </div>
+  ` : "";
 
-SEGMENTS:
-${segmentSummary}
+  const actionHtml = digest.actionItems.length > 0 ? `
+    <div style="margin-bottom:24px;">
+      <h2 style="font-size:18px;margin-bottom:12px;">✅ Action Items</h2>
+      ${digest.actionItems.map((a) => `<div style="font-size:14px;padding:8px 0;border-bottom:1px solid #E5E7EB;">☐ ${a}</div>`).join("")}
+    </div>
+  ` : "";
 
-CONNECTIONS:
-${correlationSummary}
-
-ACTION ITEMS:
-${JSON.stringify(digest.actionItems.slice(0, 3))}
-
-EMAIL LAYOUT:
-1. Header: "${digest.headline}" + date
-2. For each segment: icon + name, segment TLDR, then 2-3 story cards with title, source, TLDR, soWhat. Each story has "Go Deeper →" link: ${APP_URL}/story/{ID}?date=${digest.date}
-3. CONNECTIONS section: 2-4 cards showing segment A ↔ segment B with arrow
-4. ACTION ITEMS: top 3 checkboxes
-5. Footer
-
-Keep it SCANNABLE. Under 3 minutes to read. Each story is 2 lines max.`
-  );
-
-  // Strip markdown code fences that Gemini sometimes wraps around HTML
-  let html = response.text;
-  html = html.replace(/^```(?:html)?[\s\n]*/i, "").replace(/[\s\n]*```[\s\n]*$/i, "").trim();
-  // Ensure it starts with a valid HTML tag
-  if (!html.startsWith("<") && html.includes("<!DOCTYPE") ) {
-    html = html.slice(html.indexOf("<!DOCTYPE"));
-  } else if (!html.startsWith("<") && html.includes("<html")) {
-    html = html.slice(html.indexOf("<html"));
-  }
+  const html = `<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"></head>
+<body style="margin:0;padding:0;background:#F9FAFB;font-family:system-ui,-apple-system,sans-serif;">
+<div style="max-width:600px;margin:0 auto;padding:20px;">
+  <div style="background:linear-gradient(135deg,#1F2937,#374151);color:#fff;padding:24px;border-radius:12px 12px 0 0;">
+    <h1 style="margin:0;font-size:22px;font-weight:700;">${digest.headline}</h1>
+    <p style="margin:8px 0 0;font-size:14px;color:#D1D5DB;">${today}</p>
+    <p style="margin:4px 0 0;font-size:12px;color:#9CA3AF;">${digest.metadata.analyzed} stories · ${digest.correlations.length} connections</p>
+  </div>
+  <div style="background:#fff;padding:24px;border-radius:0 0 12px 12px;border:1px solid #E5E7EB;border-top:0;">
+    ${segmentsHtml}
+    ${correlationsHtml}
+    ${actionHtml}
+  </div>
+  <div style="text-align:center;padding:16px;font-size:12px;color:#9CA3AF;">
+    <a href="${APP_URL}?date=${digest.date}" style="color:#2ABFAB;text-decoration:none;font-weight:600;">View Full Digest on Web</a>
+    <br>Eugene's Board of Advisors · Powered by Gemini + Mastra
+  </div>
+</div>
+</body>
+</html>`;
 
   return {
     subject: `Your Daily Brief — ${digest.headline}`,
@@ -410,13 +438,14 @@ export async function runDigestPipeline(): Promise<DailyDigest> {
     console.log(`   ${s.icon} ${s.name}: ${s.stories.length} stories — ${s.tldr.slice(0, 60)}...`);
   }
 
-  // Step 4: Find correlations
+  // Step 4: Find correlations (runs in parallel with nothing else so it's fast)
   console.log("Step 4: Finding cross-segment correlations...");
   const correlations = await findCorrelations(segments);
   console.log(`   Found ${correlations.length} connections`);
 
-  // Step 5: Deep dive on top stories
-  await deepDiveTopStories(segments);
+  // Step 5: Skip deep dive in pipeline (generated on-demand via /api/perspectives)
+  // This saves ~15s of Gemini calls in the critical path
+  console.log("Step 5: Skipped (on-demand via Go Deeper)");
 
   // Build action items from all stories
   const actionItems = segments
@@ -441,8 +470,8 @@ export async function runDigestPipeline(): Promise<DailyDigest> {
   await saveDigest(date, digest);
   console.log(`\nSaved digest: ${analyzed} stories across ${segments.length} segments`);
 
-  // Compose & deliver email
-  const { subject, htmlBody } = await composeEmail(digest);
+  // Compose & deliver email (template-based, no AI call)
+  const { subject, htmlBody } = composeEmailHtml(digest);
 
   if (process.env.RESEND_API_KEY && process.env.RECIPIENT_EMAIL) {
     const result = (await sendEmailTool.execute!({ subject, htmlBody }, {} as any)) as any;

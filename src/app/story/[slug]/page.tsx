@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { AdvisorTabs } from "@/components/AdvisorTabs";
 import { ChatPanel } from "@/components/ChatPanel";
-import type { SegmentStory } from "@/lib/types";
+import type { SegmentStory, AdvisorPerspective } from "@/lib/types";
 import { useParams, useSearchParams } from "next/navigation";
 
 export default function StoryPage() {
@@ -14,11 +14,35 @@ export default function StoryPage() {
 
   const [story, setStory] = useState<SegmentStory | null>(null);
   const [loading, setLoading] = useState(true);
+  const [loadingPerspectives, setLoadingPerspectives] = useState(false);
 
   useEffect(() => {
     fetch(`/api/digest?date=${date}&slug=${slug}`)
       .then((r) => r.json())
-      .then((data) => { setStory(data.story || null); setLoading(false); })
+      .then((data) => {
+        setStory(data.story || null);
+        setLoading(false);
+
+        // Auto-fetch perspectives if not available
+        if (data.story && (!data.story.perspectives || data.story.perspectives.length === 0)) {
+          setLoadingPerspectives(true);
+          fetch("/api/perspectives", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ storyId: slug, date }),
+          })
+            .then((r) => r.json())
+            .then((pData) => {
+              if (pData.perspectives) {
+                setStory((prev) =>
+                  prev ? { ...prev, perspectives: pData.perspectives } : prev
+                );
+              }
+              setLoadingPerspectives(false);
+            })
+            .catch(() => setLoadingPerspectives(false));
+        }
+      })
       .catch(() => setLoading(false));
   }, [date, slug]);
 
@@ -26,6 +50,7 @@ export default function StoryPage() {
   if (!story) return (
     <div className="text-center py-20">
       <h1 className="text-xl font-bold mb-2">Story not found</h1>
+      <p className="text-sm text-[var(--text-muted)] mb-4">This story may not be in today&apos;s digest yet.</p>
       <a href="/" className="text-[var(--brand)] no-underline">Back to digest</a>
     </div>
   );
@@ -69,12 +94,21 @@ export default function StoryPage() {
         </div>
 
         {/* 7 Advisor Perspectives */}
-        {story.perspectives.length > 0 && (
-          <div className="bg-white rounded-xl border border-[var(--border)] p-6">
-            <h2 className="text-lg font-bold mb-4">All 7 Advisor Perspectives</h2>
+        <div className="bg-white rounded-xl border border-[var(--border)] p-6">
+          <h2 className="text-lg font-bold mb-4">All 7 Advisor Perspectives</h2>
+          {loadingPerspectives ? (
+            <div className="text-center py-8">
+              <div className="animate-pulse text-[var(--text-muted)]">
+                <p className="text-sm">🧠 Your Board of Advisors is analyzing this story...</p>
+                <p className="text-xs mt-2">Generating 7 perspectives with Challenge Protocol</p>
+              </div>
+            </div>
+          ) : story.perspectives && story.perspectives.length > 0 ? (
             <AdvisorTabs perspectives={story.perspectives} />
-          </div>
-        )}
+          ) : (
+            <p className="text-sm text-[var(--text-muted)]">No perspectives available yet.</p>
+          )}
+        </div>
       </div>
 
       {/* Chat sidebar */}
