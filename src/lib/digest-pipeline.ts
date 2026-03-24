@@ -152,51 +152,68 @@ async function analyzeSegment(segmentName: SegmentName, advisorLens: string, art
     null, 2
   );
 
-  const lensContext: Record<string, string> = {
-    "Tech Expert": "Focus on: AI tools Eugene should adopt/watch, architecture decisions for his agents, vibe-coding workflow improvements, what a Stripe/Google PM would do with this tech.",
-    "CEO Advisor": "Focus on: market signals for Sourcy AND Choys, fundraising/business model insights, what this means for Eugene's founder ambitions. Challenge his speed bias.",
-    "PM Expert": "Focus on: product thinking Eugene can steal, user behavior insights, PLG patterns. Relate to BOTH Sourcy (B2B sourcing) AND Choys (AI L&D). Challenge: is he validating or just shipping?",
+  // Force each segment to use a DIFFERENT life lens — prevents all-Sourcy bias
+  const segmentLens: Record<string, { primary: string; forbidden: string; examples: string }> = {
+    "Tech + AI": {
+      primary: "YOUR IDENTITY AS AN AI BUILDER. How does this change what you build, how you build it, or your path to becoming an AI PM thought leader?",
+      forbidden: "Do NOT mention Sourcy in soWhat. This segment is about Eugene as a BUILDER and CRAFTSMAN.",
+      examples: 'Good: "As someone shipping agents with Mastra/Gemini, this means you should switch to X" or "For your Stripe/Google PM application, knowing this gives you an edge in system design interviews"',
+    },
+    "Startup World": {
+      primary: "CHOYS (AI L&D platform) and CAREER GOALS. What can you steal for Choys? What does this mean for your tier-1 company ambitions?",
+      forbidden: "Do NOT default to Sourcy. At least 2 of 3 stories must reference Choys or career goals.",
+      examples: 'Good: "For Choys, this pricing model validates/challenges your enterprise approach" or "If you\'re applying to Stripe, this is exactly the kind of 0-to-1 thinking they test for"',
+    },
+    "Macro & Geopolitics": {
+      primary: "YOUR PERSONAL FINANCES AND LIFE IN JAKARTA. How does this affect your rupiah savings, IDX investments, cost of living, or daily life as an Indonesian?",
+      forbidden: "Do NOT frame as 'Sourcy could build an agent for this.' Frame as: how does this hit YOUR wallet, your deposits, your purchasing power?",
+      examples: 'Good: "Oil above $100 means your Jakarta transport costs jump 15-20% and rupiah weakens — consider moving deposits to USD-denominated assets" or "This trade war hits Indonesian exports, which means IDX dips — good time to dollar-cost average"',
+    },
+    "Indonesia & SEA": {
+      primary: "Mix of ALL lenses — Sourcy, Choys, personal life, career. But be SPECIFIC about Indonesia impact on Eugene's daily reality.",
+      forbidden: "Do NOT be generic about 'Southeast Asia.' Be specific about Jakarta, rupiah, Indonesian regulations, Indonesian consumer behavior.",
+      examples: 'Good: "This Indonesian regulation change means Choys needs to update its data handling for enterprise clients" or "Prabowo\'s fiscal policy directly affects your startup runway — here\'s how"',
+    },
   };
 
+  const lens = segmentLens[segmentName] || segmentLens["Indonesia & SEA"];
+
   const response = await newsAnalyst.generate(
-    `Analyze ${segmentName} news. Pick TOP 2-3 stories that matter most.
+    `Analyze ${segmentName} news. Pick TOP 2-3 stories.
 
-${lensContext[advisorLens] || ""}
+PRIMARY LENS FOR THIS SEGMENT: ${lens.primary}
+CONSTRAINT: ${lens.forbidden}
+EXAMPLES OF GOOD soWhat: ${lens.examples}
 
-EUGENE'S FULL CONTEXT (not just Sourcy!):
-- AI builder who ships fast with Claude/Gemini/Mastra — wants to be THE AI PM thought leader
-- Day job: Sourcy Global (B2B commodities sourcing, Jakarta)
-- Side business: Choys (AI-powered corporate L&D platform, 3 enterprise clients)
-- Career goal: Join Google/Stripe-level company within 1-2 years
-- Lives in Jakarta: Rupiah deposits, IDX exposure, Indonesian consumer
-- Blind spots: speed bias, builds but doesn't use, job-hops every 1-2 years
+EUGENE'S CONTEXT:
+- AI builder (Claude/Gemini/Mastra/Vercel) — wants to be THE AI PM thought leader
+- Sourcy Global (day job): B2B commodities sourcing, Jakarta
+- Choys (side business): AI-powered corporate L&D, 3 enterprise clients
+- Career: Wants to join Google/Stripe within 1-2 years
+- Jakarta life: Rupiah deposits, IDX exposure, oil prices affect his commute and groceries
+- Blind spots: ships before validating, builds tools then doesn't use them, job-hops
 
 STORIES:
 ${articlesJson}
 
-Return JSON. EVERY field MUST be non-empty and insightful:
+Return JSON:
 {
-  "tldr": "Sharp 1-2 sentence summary — what actually happened and why it matters",
+  "tldr": "Sharp summary — what happened and why it matters for the PRIMARY LENS above",
   "stories": [
     {
       "title": "exact title from input",
       "link": "exact url from input",
       "source": "source name from input",
-      "tldr": "What happened (1 sentence, factual)",
-      "soWhat": "Why Eugene SPECIFICALLY should care. Pick the RIGHT lens: AI builder identity, Choys, career goals, Indonesian life/finance, OR Sourcy. NOT always Sourcy. Be sharp and challenging. Use 'you' not 'Eugene'.",
-      "problem": "The real underlying problem or tension this reveals — be specific, not generic",
-      "opportunity": "Concrete next step Eugene could take THIS WEEK, or null. Not vague 'could explore' — specific action.",
+      "tldr": "What happened (1 sentence)",
+      "soWhat": "Use the PRIMARY LENS above. Address Eugene as 'you'. Be sharp, opinionated, challenging. Max 2 sentences.",
+      "problem": "The real tension or risk — be specific. Max 1 sentence.",
+      "opportunity": "Specific action for THIS WEEK with a concrete deliverable, or null. Not 'could explore' — name the tool, the deadline, the output.",
       "relevanceScore": 7
     }
   ]
 }
 
-RULES:
-- soWhat: Rotate perspectives! Don't always default to Sourcy. Consider: AI builder identity, Choys, career, Indonesian life, personal finance.
-- soWhat: Use challenge framing — "You're probably thinking X, but the real insight is Y" or "Here's what a Stripe PM would notice..."
-- problem: Name the REAL tension, not a generic statement
-- opportunity: Specific action for this week, or null. "Build X" is too vague. "Prototype X using Y by Friday" is good.
-- MAX 3 stories. Raw JSON only. Start with { end with }.`
+MAX 3 stories. Raw JSON only. Start with { end with }.`
   );
 
   const parsed = parseGeminiJson(response.text);
