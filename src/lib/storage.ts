@@ -10,6 +10,7 @@ async function blobPut(key: string, data: string): Promise<void> {
     access: "public",
     addRandomSuffix: false,
     contentType: "application/json",
+    allowOverwrite: true,
   });
   console.log(`  Blob PUT: ${key} → ${result.url}`);
 }
